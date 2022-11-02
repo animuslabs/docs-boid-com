@@ -1,0 +1,24 @@
+{
+  "name": "gossip.boid.com",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/animuslabs/gossip.boid.com.git",
+  "author": "Seth@Boid.com <mchosc@animusystems.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^1.0.0-alpha.25",
+    "vue": "^3.2.41"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@algolia/client-search"
+      ]
+    }
+  },
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
+  }  
+}
