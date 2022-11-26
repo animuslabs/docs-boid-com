@@ -4,7 +4,7 @@ Boid is a radical new take on The Play-to-Earn model driving players incentivizi
 ## Who is Boid for?
 Boid is for anyone who wants to be part of something huge. We designed Boid from the ground up to be as accessible as technologically possible. Anyone with a computer (or compatible smartphone) and internetconnection can use Boid.
 
-##How do I get Started?
+## How do I get Started?
 
 Currently BOID is particpating in Folding at Home (Aka F@H) to join us go to https://foldingathome.org/alternative-downloads/ and pick your version. Currently F@H supports Windows 32&64bit, macOS 10.7+,  most major Linux Distros, ARM and Rasberry PI, as well as Docker (Instructions https://hub.docker.com/r/foldingathome/fah-gpu?lng=en) and vSphere (instructions https://flings.vmware.com/vmware-appliance-for-folding-home).
 
