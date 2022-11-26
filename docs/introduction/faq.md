@@ -21,6 +21,6 @@ Security is a top priority for Boid. We only work with the most reputable distri
 A computer simulation of birds in a flock. Each “boid” follows simple rules of interaction with nearby boids. Many boids interacting results in emergent meta patterns. Likewise, the Boid Platform relies on computing resources from many individual contributors. These small contributions cumulate into massive real-world impact. Who is Boid for? Boid is for anyone who wants to be part of something huge. We designed Boid from the ground up to be as accessible as technologically possible. Anyone with a computer (or compatible smartphone) and internet connection can use Boid. 
 
 
-How to mine BOID?
+## How to mine BOID?
 
 The Boid application runs in the background, transparently taking advantage of unused computing power. The Boid application connects to your Boid account, and can tap into your resources automatically, to maximize your Boid Power rating. You can install the Boid app on as many of your devices as you like. Desktop computers with dedicated GPUs tend to perform the best, but laptops can also work as well. You can even rent a specialised service in the cloud with BOID Power to mine BOID.
