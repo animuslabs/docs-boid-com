@@ -1,96 +1,122 @@
 # NFT Actions
-Actions related to NFTs
+Documentation regarding actions related to NFT management, specifically for minting, locking, transferring, and withdrawing NFTs within the boid blockchain environment.
 
 [Source](https://github.com/animuslabs/boid-system-ts/blob/master/assembly/actions/11-nft.ts)
 
+## `doMintAsset`
+Mints atomicasset NFTs to a designated receiver boid account.
+
+**Input Parameters**
+
+```ts
+// the receiver boid account
+receiver: Account
+// data for minted asset
+data: MintAsset
+// quantity of assets to mint
+mint_quantity: u16
+```
+
+**Logic**
+Executes the `mintasset` action on the atomicassets contract for the specified mint quantity.
+
 ## `nft.lock`
-Locks an NFT until some future round
+Locks an NFT within a boid account until a specified future round.
 
 **Input Parameters**
+
 ```ts
-// the target boid account
-boid_id:Name
-// the asset to lock
-asset_id:u64
-// the round in the future when the NFT is unlocked
-locked_until_round:u16
-
-```
-**Authentication**\
-contract authentication or nft owner boid account
-
-**Validation**
-- `locked_until_round` must be a round in the future
-- can't lock an NFT which is already locked
-- can't lock an NFT for more than 200 rounds in the future
-
-**Table Updates**\
-Updates the `locked_until_round` parameter on the row of the nft asset in the`nft` table under the scope of the `boid_id` owner.
-
-> This action is mostly for when the user wants to activate an offer that requires staking NFTs. Additionally you could lock your NFTs in your account for security reasons.
-
-## `nft.xfer`
-For transfering NFTs between boid accounts. This is mostly for convenience for users that want to make basic transfers without withdrawing first.
-
-**Input Parameters**
-```ts
-// the boid account that owns the NFT to transfer
-from_boid_id:Name
-// the boid account to receive the NFT
-to_boid_id:Name
-// a vector of atomicasset asset_ids
-asset_ids:u64[]
-```
-**Authentication**\
-Requires owner authentication of `from_boid_id`
-
-**Validation**
-- 30 NFTs limit on transfer
-- `from_boid_id` must own the asset_ids
-- `to_boid_id` `account.nft_balance` must not not exceed the `config.nft.boid_id_maximum_nfts`
-
-
-**Table Updates**
-- row(s) removed from `nft` table under `from_boid_id` scope
-- row(s) added to `nft` table under `to_boid_id` scope
-- `from_boid_id` `account.nft.balance` decremented for each NFT removed
-- `to_boid_id` `account.nft.balance` incremented for each NFT added
-
-## `nft.withdraw`
-Withdraws an NFT held by a boid account from the `boid` system contract to their owner account.
-
-**Input Parameters**
-```ts
-// the NFT owner boid account
-boid_id:Name
-// vector of atomicasset ids to transfer
-asset_ids:u64[]
-// the owner account to receive the NFTs
-to:Name
+// the boid account owner of the NFT
+boid_id: Name
+// the asset to be locked
+asset_id: u64
+// future round when the NFT unlocks
+locked_until_round: u16
 ```
 
 **Authentication**
-- owner authentication of the owner boid account
-- chain authentication of the `to` account
-> This means you can only withdraw to your own owner account\
-> possibly we could remove the owner auth requirement
+Requires either contract authority or owner boid account authority.
 
 **Validation**
-- `asset_ids` must be owned by `boid_id`
+
+- `locked_until_round` must be set to a future game round.
+- NFT must not already be locked.
+- NFTs cannot be locked for more than 200 future rounds.
 
 **Table Updates**
-- row(s) removed from `nft` table under `boid_id` scope
-- decrements `account.nft_balance` of the owner boid account for each NFT withdrawn
+Updates the `locked_until_round` field in the `nfts` table.
 
-<!-- ## `action.name`
+> Used to stake NFTs for offers or for safeguarding assets within an account.
+
+## `nft.xfer`
+Transfers NFTs between two boid accounts, provided they are unlocked.
 
 **Input Parameters**
-```ts
 
+```ts
+// originating boid account owning the NFTs
+from_boid_id: Name
+// destination boid account to receive the NFTs
+to_boid_id: Name
+// array of asset_ids to be transferred
+asset_ids: u64[]
 ```
-**Authentication**\
+
+**Authentication**
+Requires authentication of the owner boid account (`from_boid_id`).
 
 **Validation**
 
+- Transfer is limited to below the maximum NFTs set in configuration (30 NFTs by default).
+- NFTs must be owned by `from_boid_id` and not locked.
+- `to_boid_id`'s total NFTs must not exceed the maximum allowable value post-transfer.
 
-**Table Updates**\ -->
+**Table Updates**
+
+- Removes NFT rows under `from_boid_id` scope in the `nfts` table.
+- Adds NFT rows under `to_boid_id` scope in the `nfts` table.
+- Updates NFT balances for both `from_boid_id` and `to_boid_id` accounting for the transferred assets.
+
+## `nft.withdraw`
+Enables the withdrawal of an NFT from a boid account to an EOSIO blockchain account, ensuring the asset is not locked.
+
+**Input Parameters**
+
+```ts
+// boid account holding the NFT
+boid_id: Name
+// array of asset_ids to be withdrawn
+asset_ids: u64[]
+// blockchain account to receive the NFTs
+to: Name
+```
+
+**Authentication**
+Requires authenticated authority from the boid account owner.
+
+**Validation**
+
+- NFTs identified by `asset_ids` must be owned by boid account `boid_id`.
+
+**Table Updates**
+
+- Removes rows from the `nfts` table pertaining to the `boid_id` in question.
+- Decreases the `nft_balance` of the boid account in `accounts` table for each NFT withdrawn.
+
+## `nftReceiver`
+Sets the receiver account for receiving minted NFTs.
+
+**Authentication**
+requires contract authority
+
+**Table Updates**
+Inserts or updates an `nftmints` table singleton record indicating the boid account allowed to receive new NFT mints.
+
+## `logMint`
+Picks up minting logs and allocates minted NFTs to the proper boid account per configuration settings.
+
+**Authentication**
+Requires contract authority, called as a notification from another action.
+
+**Table Updates**
+Reduces the `mint_quantity_remaining` in the `nftmints` singleton and adds NFT ownership entries in the `nfts` table for the receiver account.

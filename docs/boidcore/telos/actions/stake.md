@@ -1,147 +1,164 @@
 # Stake Actions
-Actions relating to BOID stake
+
+Instructions pertaining to the management of stakes including staking BOID tokens, unstaking, and handling stake delegation.
 
 ## `stake`
-Moves BOID tokens from balance to self_stake bucket
+Transfers BOID tokens from a user's internal account balance to their staked balance.
 
 **Input Parameters**
 ```ts
-// target boid account
-boid_id:Name
-// quantity of BOID to stake
-quantity:u32
+boid_id: Name, // Staker's BOID account name
+quantity: u64   // Amount of BOID tokens to stake
 ```
-**Authentication**\
-contract or `boid_id` auth required
+
+**Authentication**
+- The action must be authorized by the contract or the `boid_id` account.
 
 **Validation**
-- quantity must be less than or equal to current `account.balance`
-- quantity must be greater than zero
+- `quantity` should be greater than zero.
 
 **Table Updates**
-- updates global table by reducing the `global.total_liquid_balance` and increasing `global.total_stake` by quantity
-- updates user account by subtracting `account.balance` and increasing `account.stake.self_staked` by quantity
+- Deducts `quantity` from `account.balance`
+- Increment `account.stake.self_staked` by `quantity`
 
-**Inline Actions**\
-initiates a transfer of `quantity` of BOID from the system contract to `stake.boid`
+**Inline Actions**
+- Transfers BOID tokens equivalent to `quantity` to `stake.boid` with a memo indicating staking.
 
 ## `stake.deleg`
-Delegate stake by moving it from your self_staked bucket to the dedicated `stakes` table. Delegating enables you to specify another boid account that should receive the benefit of your stake while the owner account still retains ownership. Additionally delegating staked BOID unlocks the ability to lock tokens until some round in the future. This enables very long lockup periods for specific benefits as well as increased security(self delegation is allowed). Delegated stakes have a special limitation in that they must be specified in units of 10k BOID, this reduces RAM costs and helps to prevent spam.
+Facilitates the delegation of a stake to another account, potentially with a stake lock until a specified round.
 
 **Input Parameters**
 ```ts
-// the boid account that owns the stake
-from_boid_id:Name
-// the boid account to receive the delegation
-to_boid_id:Name
-// the quantity to stake in 10k BOID units
-stake_quantity:u16
-// the round in the future when the stake becomes unstakable
-lock_until_round:u16
+from_boid_id: Name,     // Delegating account's BOID name
+to_boid_id: Name,       // Recipient account's BOID name
+stake_quantity: u64,    // Amount of BOID tokens to delegate
+lock_until_round: u32   // Round number until which stake is locked
 ```
-**Authentication**\
-requires contract or `from_boid_id` auth
+
+**Authentication**
+- The action requires the authorization of the contract or the delegating `from_boid_id`.
 
 **Validation**
-- `from_boid_id` must hold enough BOID in their `self_staked` bucket
-- `lock_until_round` must be greater than the minimum delegated stake length defined in `config.stake.extra_stake_min_locked_rounds`
+- The `from_boid_id` must have sufficient BOID in `self_staked`.
+- The `lock_until_round` must be set beyond the current round by at least the minimum lock duration configured.
 
 **Table Updates**
-- `from_boid_id` boid account `stake.self_staked` is reduced by `quantity` * 10000
-- `to_boid_id` boid account `stake.received_delegated_stake` is incremented by `quantity`
+- Adjusts `account.stake.self_staked` and `account.stake.received_delegated_stake` by the delegated amount.
 
 ## `unstke.deleg`
-Returns a delegated stake back to the `self_stake` bucket. Delegated stake can't be unstaked if it's still locked, but can remain staked as long as the owner desires.
+Returns delegated BOID tokens from the `stakes` table to the delegator's `self_stake`.
 
 **Input Parameters**
 ```ts
-// The stake id from the stakes table
-stake_id:u64
+stake_id: u64 // Unique ID for the delegated stake
 ```
-**Authentication**\
-requires contract or `stake.from_boid_id` auth
 
-**Validation**\
-`stake.locked_until_round` must be in the past
+**Authentication**
+- Requires authorization from the contract or the `stake.from_boid_id`.
+
+**Validation**
+- Unstaking can only occur after the stake lock period has ended.
 
 **Table Updates**
-- Updates the `account` row of `stake.from_boid_id` by adding the stake back to their `account.stake.self_staked` bucket
-- Updates the `account` row of `stake.to_boid_id` by subtracting the stake from their `account.stake.received_delegated_stake` bucket
-- removes the target delegated stake row from the `stakes` table
+- Reinstates `account.stake.self_staked`
+- Reduces `account.stake.received_delegated_stake`
+- Removes the entry for the delegated stake.
 
 ## `unstake.init`
-Start the process of unstaking, which moves tokens from `self_staked` to `balance` after a delay. During the delay the tokens are still counted as staked.
+Begins the unstaking process, scheduling the transfer of tokens from `self_staked` to the user's balance.
 
 **Input Parameters**
 ```ts
-// target boid account
-boid_id:Name
-// the BOID quantity to start unstaking
-quantity:u32
+boid_id: Name, // Staker's BOID account name
+quantity: u64   // Amount of BOID tokens to unstake
 ```
-**Authentication**\
-Requires contract auth or `boid_id`
+
+**Authentication**
+- Authorized by the contract or the `boid_id`.
 
 **Validation**
-- `quantity` must be equal or less than the `account.stake.self_stake`
-- pending unstake must not already be in process
--
-
-**Table Updates**\
-add quantity and unlock round data to `account.stake.unstaking`
-
-
-## `unstake.stop`
-Cancels 'unstake' currently in progress
-
-**Input Parameters**
-```ts
-// target boid account
-boid_id:Name
-```
-**Authentication**\
-requires contract or boid account auth
-
-**Validation**\
-must have an entry in `account.stake.unstaking` to remove
-
-**Table Updates**\
-makes `account.stake.unstaking` empty
-
-## `unstake.end`
-moves unstaking funds back into the liquid balance
-
-**Input Parameters**
-```ts
-// target boid account
-boid_id:Name
-```
-**Authentication**\
-no authorization required
-
-**Validation**
-- account must have a pending unstake
-- pending unstake must be past unlock round
+- `quantity` must not be more than the available `self_staked` amount.
+- There should be no ongoing unstaking process for the account.
 
 **Table Updates**
-- increment `account.balance` and decrement `account.stake.self_staked` by the unstake quantity
-- remove the `account.stake.unstaking` data from the account row
-- update the `global` table
+- Records an entry in `account.stake.unstaking` for the pending unstake.
 
-**Inline Actions**\
-trigger BOID token transfer from `stake.boid` to `boid`
-
-<!-- ## `action.name`
-
+## `unstake.stop`
+Aborts an active unstaking operation.
 
 **Input Parameters**
 ```ts
-
+boid_id: Name // Staker's BOID account name
 ```
-**Authentication**\
 
+**Authentication**
+- Authorized by the contract or the `boid_id`.
 
 **Validation**
+- An unstaking process should currently be in progress to be cancelled.
+
+**Table Updates**
+- Clears the `account.stake.unstaking` process.
+
+## `unstake.end`
+Concludes the unstaking process by transferring funds from `self_staked` to the user's available balance.
+
+**Input Parameters**
+```ts
+boid_id: Name // Staker's BOID account name
+```
+
+**Authentication**
+- No authentication is enforced by the code.
+
+**Validation**
+- An unstaking invoking is required that has passed its release round.
+
+**Table Updates**
+- Increases `account.balance`
+- Decreases `account.stake.self_staked`
+- Removes the pending unstaking entry `account.stake.unstaking`
+
+**Inline Actions**
+- Processes BOID token transfers from `stake.boid` to the requestor.
+
+## `withdraw`
+Withdraws BOID tokens from a BOID account to an external address on the Proton blockchain.
+
+**Input Parameters**
+```ts
+boid_id: Name,   // Originating BOID account name
+quantity: u64,   // Token amount to withdraw
+to: ChainAccount // Destination Proton chain account
+```
+
+**Authentication**
+- Action must be authorized by the owner of `boid_id`.
+
+**Validation**
+- `quantity` should not surpass the withdrawable account balance.
+
+**Inline Actions**
+- Directly transfers BOID tokens to the specified external account.
+
+## `internalxfer`
+Executes an internal transfer of BOID tokens from the sender to the recipient within the ecosystem.
+
+**Input Parameters**
+```ts
+from_boid_id: Name, // Sending account's BOID name
+to_boid_id: Name,   // Receiving account's BOID name
+quantity: u64,      // Token quantity for the transfer
+memo: string        // Memo text for the transfer
+```
+
+**Authentication**
+- Required from the `from_boid_id` owner.
+
+**Validation**
+- `from_boid_id` must not match `to_boid_id`, and `quantity` has to be positive.
+
+**Table Updates**
+- Updates `from_boid_id` and `to_boid_id` balances as per the transfer amount.
 
 
-**Table Updates**\ -->

@@ -1,88 +1,107 @@
 # Offers Actions
-Actions related to offers. Offers allow the system to enable users to exchange resouces and earn rewards.
+This contract encompasses actions related to offers, which allow users to exchange resources and earn rewards.
 
-[Source](https://github.com/animuslabs/boid-system-ts/blob/master/assembly/actions/12-offers.ts)
+### `offer.add`
+This action registers an offer claimable by eligible accounts. Requires contract authority.
 
-## `offer.add`
-For the contract auth to add offers to the system.
+**Input Parameters:**
 
-**Input Parameters**
 ```ts
-requirements:OfferRequirements
-actions:OfferAction
-rewards:OfferRewards
-limits:OfferLimits
+requirements: OfferRequirements,
+actions: OfferAction,
+rewards: OfferRewards,
+limits: OfferLimits
 ```
-> The action input data types are described on the [Offers Table](../tables/offers) page.
 
-**Authentication**\
-requires contract authority
+Details on the input parameters are specified on the [Offers Table](../tables/offers) page.
 
-**Validation**
-- can't set nft_action burn true and lock_rounds above zero
-- rewards pwrmod_id must be valid
-- `limits.available_until_round` must be a round in the future
-- `limits.offer_quantity_remaining` must be above zero
+**Authentication:**
+Requires contract authority, typically invoked by inline actions
 
-**Table Updates**\
-Adds a new entry to the `offers` table.
+**Validation:**
 
-## `offer.claim`
-Enables a boid account to take advantage of an available offer.
+- NFT actions with `burn` set to true must not have `lock_rounds` greater than zero.
+- `activate_booster_ids` included in rewards must correspond to valid booster IDs.
+- `available_until_round` within limits must be set for a future round.
+- `offer_quantity_remaining` within limits must be greater than zero.
+- If `team_id` is specified in requirements, validate each specified team.
 
-**Input Parameters**
+**Table Updates:**
+A new entry is added to the `offers` table with the provided offer data.
+
+---
+
+### `offer.claim`
+Allows an account to claim benefits from an active offer.
+
+**Input Parameters:**
+
 ```ts
-// the boid account claiming the offer
-boid_id:Name
-// the offer_id from the offers table
-offer_id:u64
-// if the target offer requires an NFT action(s) include the asset_id(s) here
-required_nft_action_ids:u64[]
+boid_id: Name, // Account claiming the offer
+offer_id: u64, // ID of the offer from the offers table
+required_nft_action_ids: u64[] // Asset IDs for any required NFT actions
 ```
-**Authentication**\
-the authority of `boid_id`
 
-**Validation**
+**Authentication:**
+Authenticated as `boid_id`
+
+**Validation:**
+
+- Validates sufficient offer quantity is remaining.
+- Ensures the offer is not expired by round.
+- Minimum balance requirements are met.
+- Minimum team contribution level is satisfied.
+- Power ratings are above required thresholds.
+- Total staked amount meets or exceeds requirement.
+- Team membership is eligible if necessary.
+
+**Table Updates:**
+
+- Depending on the offer, related tables may be updated.
+- Decreases `offer_quantity_remaining`.
+- Increments `offer.total_claimed`.
+
+**Inline Actions:**
+Trigger actions such as additional account stake, transfers, and possibly boosts based on the offer details.
+
+---
+
+### `offer.rm`
+Removes an offer from the system. Requires contract authority.
+
+**Input Parameters:**
+
 ```ts
-  validateOffer(account:Account, req:OfferRequirements, limits:OfferLimits):void {
-    // makes sure the offer has claimins remaining
-    check(limits.offer_quantity_remaining > 0, "no offers remaining for this offer_id")
-    // make sure the offer hasn't expired based on time
-    check(limits.available_until_round > this.currentRound(), "offer has expired")
-    // check account for minimum balance requirement
-    check(req.min_balance <= account.balance, "minimum balance requirement not met to claim this offer")
-    // check account team contribution minimum requirement
-    check(req.min_cumulative_team_contribution <= account.team.team_cumulative_contribution, "team_cumulative_contribution is below the minimum requirement to claim this offer")
-    // check account power minimum
-    check(req.min_power <= account.power.rating, "account power is below min_power requirement")
-    // check account stake requirement
-    check(req.min_stake <= account.stake.self_staked + (u32(account.stake.received_delegated_stake) * u32(1e4)), "account total stake is below the offer min_stake requirement")
-    // check team membership if necessary
-    if (req.team_id.length > 0) check(req.team_id.includes(account.team.team_id), "account team is not eligible for this offer")
-  }
+offer_id: u64 // ID of the offer to remove
 ```
-> if offer requires NFT/BOID burn, stake, deposit, validates that the account has the ability to do so
 
-**Table Updates**
-- depends on the offer being claimed
-- decrements the `offer.limits.offer_quantity_remaining`
-- increments the `offer.total_claimed`
-> To see the potential table changes review the [Offers Table](../tables/offers) page.
+**Authentication:**
+Requires contract authority
 
-**Inline Actions**\
-Based on the details of the offer it could trigger `stake`, `internalxfer`, NFT burn, `pwrmod.add`.
+**Validation:**
 
-<!-- ## `action.name`
+- Validates the existence of the offer before removal.
 
+**Table Updates:**
 
-**Input Parameters**
-```ts
+- Removes the specified offer from the `offers` table.
 
-```
-**Authentication**\
+---
 
+### `offers.clean`
+Batch removal of offers. Intended to clear expired or invalid offers from the system. Requires contract authority.
 
-**Validation**
+**Input Parameters:**
+None
 
+**Authentication:**
+Requires contract authority
 
-**Table Updates**\ -->
+**Validation:**
+
+- Batch process, might be subject to transaction resource limits.
+
+**Table Updates:**
+
+- Non-specific, may iterate and remove offers up to a specified system limit.
+

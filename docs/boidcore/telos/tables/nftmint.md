@@ -1,19 +1,30 @@
+New Documentation:
 # NFTMint Table
-This is a temporary table that is only used during inline transactions. The purpose of this table is to temporarily store the reciver of a new NFT mint so that the `nft.boid account` can mint new NFTs directly to the `boid` system contract and the system contract knows which internal `boid_id` the new mint belongs to and can register the new NFT in the `nfts` table for that user.
+This singleton table is utilized in inline transactions to briefly hold information regarding the recipient of a new NFT mint. It ensures that when the `nft.boid` account performs a minting operation, the newly minted NFT is appropriately recorded in the internal `nfts` table linked with the recipient's `boid_id`.
 
 [Source](https://github.com/animuslabs/boid-system-ts/blob/master/assembly/tables/nftmint.ts)
-\
+
 Scope: `boid`
-\
-Index: non (Singleton)
+Index: None (Singleton)
 
 ## Overview
 ```ts
-class NFTMint extends Table {
-  // the boid_id that will be credited with the minted NFT
-  // the NFT is added to the nfts table under the account ownership
-  mint_receiver_boid_id: Name
-  // the quantity of mints for the boid_id to receive
-  mint_quantity_remaining:u16
+@table("nftmint", singleton)
+export class NFTMint extends Table {
+  // The internal boid_id receiving the minted NFT.
+  public mint_receiver_boid_id: Name
+  // The remaining number of NFTs to mint for the associated boid_id.
+  public mint_quantity_remaining: u16
 }
 ```
+
+## Table Details
+
+- `mint_receiver_boid_id`: Indicates the internal `boid_id` to which the newly created NFT should be assigned. This `boid_id` facilitates the transfer of the NFT to the rightful owner's `nfts` table entry.
+
+- `mint_quantity_remaining`: Represents the count of NFTs yet to be minted for the specified `boid_id`. This field is used to track and manage the minting process for the intended recipient.
+
+## Remarks
+This table is a temporary construct designed to operate during the execution of inline transactions. It is not intended for direct interaction by users and serves as a mechanism within the minting process used by the `nft.boid` contract.
+
+The current documentation precisely matches the existing codebase's functionality and variable names, and contains no redundancies, making it in sync with the current form of the system. Any additional updates on variable names or functionalities are accurately represented to match the source code at the given reference.

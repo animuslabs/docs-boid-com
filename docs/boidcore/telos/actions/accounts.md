@@ -1,151 +1,188 @@
 # Account Actions
-This page is dedicated to contract actions related to accounts.
-
-[Source](https://github.com/animuslabs/boid-system-ts/blob/master/assembly/actions/4-accounts.ts)
 
 ## `account.add`
-For adding new accounts. This action requires the contract authority. Most users would use the `account.buy` action which triggers `account.add` inline. This action is used directly by the contract to create the initial system `boid` account and any other system contracts that don't have to be purchased. Accounts created directly with this action aren't validated by the config suffix whitelist.
+This action adds new accounts to the system, requiring contract authority. It bypasses config suffix whitelist validation and is suitable for creating system accounts including the initial `boid` account.
 
-**Input Parameters**
+### Input Parameters
 ```ts
-// the boid_id to be created
-boid_id:Name
-// the the owners (native chain accounts) of the new boid account
-owners:Name[]
-// the sponsors of the account
-sponsors:Name[]
-// the keys on the account for key authentication
-keys:PublicKey[]
+boid_id: Name, // The boid_id to be created
+owners: Name[], // Owners of the new boid account (native chain accounts)
+sponsors: Name[], // Sponsors of the account
+keys: PublicKey[] // Keys for key authentication on the account
 ```
-**Authentication**\
-Requires contract authority
 
-**Validation**
-- `boid_id` isn't empty
-- `boid_id` is unique
-- the length of `owners` doesn't exceed `config.account.max_owners`
-- the length of sponsors doesn't exceed `config.account.max_sponsors`
-- for each name in `owners` ensure it's an existing chain account
-- for each name in `sponsors` ensure it's an existing boid account
-- system account `boid` can't be listed in `sponsors` vector
+### Authentication
+Requires contract authority, usually called inline by other actions.
 
-**Table Updates**\
-A new row is added to the [`accounts`](../tables/accounts) table.
+### Validation
+
+- `boid_id` cannot be empty and must be unique.
+- Number of `owners` cannot exceed `config.account.max_owners`.
+- Only one `sponsor` can be specified.
+- `owners` must be valid native chain accounts.
+- `sponsors` must be valid existing boid accounts and the system account `boid` cannot be a sponsor.
+
+### Table Updates
+Inserts a new row into the `accounts` table with the provided `boid_id`, `owners`, `sponsors`, and `keys`.
+
+---
 
 ## `owner.add`
-For adding an owner to an existing boid account.
+Adds an owner to an existing boid account, allowing modification of the account's ownership.
 
-**Input Parameters**
+### Input Parameters
+
 ```ts
-// the target boid_id to add an owner to
-boid_id:Name
-// the owner to be added, must be an existing chain account
-owner:Name
+boid_id: Name, // The target boid_id to add an owner to
+owner: Name // The owner to be added, must be an existing chain account
 ```
-**Authentication**\
-An existing owner account on the boid account.
 
-**Validation**
-- Checks that the owner account being added is a native chain account.
-- Checks that the number of owners on the account doesn't exceed the `config.account.max_owners`
+### Authentication
+Authenticated by an existing owner or requires contract authority if no current owners are set.
 
-**Table Updates**\
-A row in the `accounts` table is modified with the new `owner` added to the `owners` vector
+### Validation
+
+- Added `owner` must be a valid native chain account.
+- Total `owners` must not exceed `config.account.max_owners`.
+- Newly added `owner` must not duplicate existing owners.
+
+### Table Updates
+Modifies a row in the `accounts` table, appending the new `owner`.
+
+---
 
 ## `owner.rm`
-Remove an owner from an existing boid account
+Removes an owner from a boid account, allowing for updates in ownership structure.
 
-**Input Parameters**
+### Input Parameters
+
 ```ts
-// the boid account to modify
-boid_id:Name
-// the owner to modify
-owner:Name
+boid_id: Name, // The boid account to modify
+owner: Name // The owner to remove
 ```
-**Authentication**\
-An existing owner on the boid account
 
-**Validation**
-- Checks that there will still be at least one owner on the account (can't remove the last owner)
-- Ensures that the provided `owner` exists for this boid account
+### Authentication
+Requires boid account authorization of an existing owner.
 
-**Table Updates**\
-Updates the target row in the `accounts` table after removing the target `owner` from the row `owners` list.
+### Validation
+
+- At least one owner must remain.
+- Specified `owner` must exist in the account's current `owners` list.
+
+### Table Updates
+Modifies the `accounts` table, removing the specified `owner`.
+
+---
 
 ## `account.buy`
-This action is the primary method to create a new boid account. Boid accounts are always sponsored by an existing boid account and the sponsor pays the account creation fee. This can be facilitated by a UI that enables users to generate and share invite links. The `recover.boid` chain account is added to new accounts as a last resort recovery mechanism. Advanced users can opt to remove the recovery account when ready. Triggers an inline `account.add` action after perfoming validations.
+Facilitates the creation of a new boid account by an existing account, which sponsors the creation fee.
 
-**Input Parameters**
+### Input Parameters
+
 ```ts
-// the boid_id of the new boid account, must be unique and follow the suffix whitelist
-boid_id:Name
-// the native chain account(s) that controls this account
-owners:Name[],
-// the keys that control this account
-keys:PublicKey[],
-// the boid_id of the account that sponsored creation of this new account (and pays the fee)
-sponsor:Name
+payer_boid_id: Name, // The boid_id of the sponsoring account
+new_account: AccountCreate // Details of the new account being created
 ```
-**Authentication**\
-Requires authentication of the sponsor account
 
-**Validation**
-- `boid_id` is of a minimum length (8)
-- `boid_id` has a suffix on the `config.account.suffix_whitelist`
-- sponsor boid account has at least `config.account.purchase_price` in their deposits row
-- sponsor boid account has no sponsors (you can't sponsor an account if you have a sponsor)
-- at least one key or owner account must be specified in the inputs
+### Authentication
+Authenticated by the sponsoring (payer) boid account.
 
-**Table Updates**
-- `config.account.purchase_price` is subtracted from the sponsor account `deposits` row
-- `account.add` action is triggered which creates the row in the `accounts` table
+### Validation
+
+- `boid_id` of the new account must be unique and meet whitelist criteria.
+- Sponsor must have sufficient balance for account creation fee.
+- Sponsor must not have a sponsor.
+- New account must have at least one owner or key.
+
+### Table Updates
+Subtracts creation fee from the sponsor, stores the new account via `account.add`.
+
+---
 
 ## `account.edit`
-This action is for the user to update their social data. This is just for use in the UI and doesn't need to be validated by the contract.
+Enables users to update their metadata.
 
-**Input Parameters**
+### Input Parameters
+
 ```ts
-boid_id:Name
-social_ipfs_json:string
+boid_id: Name, // The boid_id of the account being edited
+meta: u8[] // Metadata in bytes, limited to 512 bytes
 ```
-**Authentication**\
-the boid account
 
-**Validation**\
-not validated, any string is valid
+### Authentication
+Authenticated by the boid account owner.
 
-**Table Updates**\
-The target boid `accounts` row is updated with the input `social_ipfs_json`
+### Validation
+
+- `meta` size must not exceed 512 bytes.
+
+### Table Updates
+Sets the `meta` field in the `AcctMeta` table for the boid account.
+
+---
 
 ## `account.free`
-This action can be called to remove a sponsor from a boid account
+Removes a sponsor from a boid account for independent operation.
 
-**Input Parameters**
+### Input Parameters
+
 ```ts
-// the target boid account
-boid_id:Name
+boid_id: Name // The boid_id of the account from which the sponsor is being removed
 ```
-**Authentication**\
-the target boid account
 
-**Validation**
-- the target boid account must have a sponsor
-- the target boid account must have at least `config.account.remove_sponsor_price` liquid BOID balance
+### Authentication
+Authenticated by the boid account owner.
 
-**Table Updates**
-- `config.account.remove_sponsor_price` is subtracted from the liquid balance of the target boid account and added to the liquid balance of the sponsor account
-- the sponsor is removed from the target boid account row
+### Validation
 
-<!-- ## `action.name`
+- Account must currently have a sponsor.
+- Account must afford the sponsor removal fee.
 
-**Input Parameters**
+### Table Updates
+Removes sponsor from `sponsors` list, deducts fee from balance, and splits fee between system and sponsor accounts.
+
+---
+
+## `account.rm`
+(Development only) Removes an account from the system.
+
+### Input Parameters
+
 ```ts
-
+boid_id: Name // The boid_id of the account to be removed
 ```
-**Authentication**\
 
-**Validation**
+### Authentication
+Requires contract authority.
 
+### Table Updates
+Removes the account from the `accounts` table.
 
-**Table Updates**\ -->
+---
 
+## `account.mod`
+(Development only) Modifies `received_delegated_stake` of an account for testing purposes.
+
+### Input Parameters
+
+```ts
+boid_id: Name, // The boid_id of the account to modify
+received_delegated_stake: u16 // The new value for received_delegated_stake
+```
+
+### Authentication
+Requires contract authority.
+
+### Table Updates
+Updates `received_delegated_stake` in the `accounts` table for the account.
+
+---
+
+## `meta.clean`
+(Development only) Cleans up account metadata for development needs.
+
+### Authentication
+Requires contract authority.
+
+### Table Updates
+Removes all entries from the `AcctMeta` table.

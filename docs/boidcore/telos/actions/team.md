@@ -1,117 +1,115 @@
 # Team Actions
-Actions related to teams. Some functionality of teams isn't implemented yet. In the future users should be able to purchase a team and customize it how they like. Additionally teams can accumulate staked BOID but can't yet unstake or spend it. In the future teams could spend tokens to purchase team exclusive offers as well as interact with Boid Universe apps. Managers don't yet have any functions but the idea is that they would have some limited permissions and trusted by the team owner for day to day management and interacting with Boid Universe etc.
+
+Team-related actions allow users to create, change, and manage teams within the scope of the Boid platform. Teams can accumulate staked BOID and potentially access exclusive offers or perks. Future enhancements may include additional team management features and interactions with Boid Universe applications.
 
 ## `team.change`
-allows a user to change teams
+Allows a user to change teams.
 
 **Input Parameters**
+
 ```ts
-// target boid account
-boid_id:Name
-// team to switch to ( from teams table )
-new_team_id:u16
-// set new tax pct during team change
-new_pwr_tax_pct:u8
+boid_id: Name           // Target boid account.
+new_team_id: u8         // ID of the team to switch to.
+new_pwr_tax_mult: u8    // New power tax multiplier during team change.
 ```
-**Authentication**\
-requires contract or boid account auth
+
+**Authentication**
+Requires contract authority, usually called inline by other actions.
 
 **Validation**
-- Can't switch to the team you are already on
-- must call `power.claim` in the same round before changing teams
-- can't change teams/edit tax rate too frequently, limited by `config.team.change_min_rounds`
-- `new_pwr_tax_pct` must be equal or greater than the team minimum
+
+- The user cannot switch to their current team.
+- `power.claim` must be called in the same round before changing teams.
+- Changing teams or editing the tax multiplier cannot occur too frequently, as governed by `config.team.change_min_rounds`.
+- The new power tax multiplier must be greater than or equal to the team's minimum requirement.
 
 **Table Updates**
-- `team.members` and `team.power` incremented for new team
-- `team.members` and `team.power` decremented for old team
-- `account.team` updated to new values
+
+- `teams` table: increment `members` and `power` for the new team, decrement for the old team.
+- `accounts` table: update team-related details of the account.
 
 ## `team.taxrate`
-user can set their team tax rate
+Enables a user to set their team tax rate.
 
 **Input Parameters**
+
 ```ts
-// target boid account
-boid_id:Name
-// new tax rate to pay the team
-new_pwr_tax_mult:u8
+boid_id: Name        // Target boid account.
+new_pwr_tax_mult: u8 // New tax rate multiplier to pay the team.
 ```
-**Authentication**\
-requires contract or boid account auth
+
+**Authentication**
+Requires contract authority or authorization from the boid account.
 
 **Validation**
-- can't set new rate to the same as the old rate
-- can't change teams/edit tax rate too frequently, limited by `config.team.change_min_rounds`
 
-**Table Updates**\
-updates `account.team.pwr_tax_mult` to new value
+- New rate cannot be the same as the old rate.
+- Team or tax rate changes are restricted by `config.team.change_min_rounds`.
+
+**Table Updates**
+
+- `accounts` table: update `team_tax_mult` of the account with the new value.
 
 ## `team.create`
-to create a new team
+Creates a new team.
 
 **Input Parameters**
+
 ```ts
-// boid_id that owns the team
-owner:Name
-// minimum tax rate of the team
-min_pwr_tax_mult:u8
-// the cut of the team tax that goes to the owner
-owner_cut_mult:u8
-// url safe name of the team
-url_safe_name:string
-// additional team metadata in ipfs JSON
-info_json_ipfs:string
+owner: Name             // Account that will own the team.
+min_pwr_tax_mult: u8    // Minimum team power tax multiplier.
+owner_cut_mult: u8      // Owner's cut multiplier of the team tax.
+url_safe_name: string   // URL-safe name for the team.
+info_json_ipfs: string  // IPFS hash for JSON metadata about the team.
 ```
-**Authentication**\
-requires contract auth
+
+**Authentication**
+Requires contract authority.
 
 **Validation**
-- accounts with sponsors can't be a team owner
 
-**Table Updates**\
-adds new row to the `teams` table
+- Accounts with sponsors are prohibited from team ownership.
+- `min_pwr_tax_mult` and `owner_cut_mult` must not exceed the maximum allowed value.
+
+**Table Updates**
+
+- `teams` table: add a new row for the newly created team.
 
 ## `team.edit`
-allows the team owner to edit their team
+Permits the team owner to modify team details.
 
 **Input Parameters**
+
 ```ts
-// new team owner (or specify self to remain owner)
-owner:Name
-// new team managers (Not implemented)
-managers:Name[]
-// team tax rate
-min_pwr_tax_mult:u8
-// the cut of the team profit that goes to the owner
-owner_cut_pct:u8
-// url safe name of the team, for links
-url_safe_name:string
-// IFPS hash to JSON data about team, just for UI usage
-info_json_ipfs:string
+team_id: u8             // ID of the team being edited.
+owner: Name             // New team owner, or self to remain as the owner.
+managers: Name[]        // Team managers (future use).
+min_pwr_tax_mult: u8    // Minimum power tax rate multiplier for the team.
+owner_cut_mult: u8      // Owner's profit cut multiplier.
+url_safe_name: string   // URL-safe name of the team.
+meta: u8[]              // Array of metadata bytes.
 ```
-**Authentication**\
-requires contract or boid account owner auth
 
-**Validation**
-- managers must be valid boid accounts
-- can't edit team too quickly, determined by `config.team.edit_team_min_rounds`
-
-**Table Updates**\
-updates row in `teams` table with new data
-
-
-<!-- ## `action.name`
-
-
-**Input Parameters**
-```ts
-
-```
-**Authentication**\
-
+**Authentication**
+Requires contract authority or authorization from the boid account owner.
 
 **Validation**
 
+- Managers specified must be valid boid accounts without duplication.
+- Editing team details are restricted by `config.team.edit_team_min_rounds`.
+- `min_pwr_tax_mult` and `owner_cut_mult` must not exceed the maximum allowed value.
+- Metadata array `meta` size should not exceed 2048 bytes.
 
-**Table Updates**\ -->
+**Table Updates**
+
+- `teams` table: updated with new details for the specified team.
+
+---
+
+## Additional Actions (DEBUG)
+
+### `team.setpwr`
+**Development-Only**: Sets the power for a team.
+
+### `team.setmem`
+**Development-Only**: Adjusts the number of members for a team.

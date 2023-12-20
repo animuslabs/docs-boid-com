@@ -28,13 +28,13 @@ export default {
                 { text: 'boid.com', link: 'https://boid.com' },
                 { text: 'Boid App', link: 'https://app.boid.com' },
                 { text: 'PowerPools', link: 'https://powerpools.io' },
-                { text: 'Boid Avatars', link: 'https://avatar.boid.com' }      
+                { text: 'Boid Avatars', link: 'https://avatar.boid.com' }
             ]},
             {
               text: 'bp.boid',
               items: [
                 { text: 'Vote for us on Telos', link: 'https://eosauthority.com/vote/producers?network=telos' },
-                { text: 'Vote for us on EOS', link: 'https://eosauthority.com/vote/producers?network=eos' }   
+                { text: 'Vote for us on EOS', link: 'https://eosauthority.com/vote/producers?network=eos' }
             ]}
           ],
         socialLinks: [
@@ -72,7 +72,7 @@ export default {
                       { text: 'Windows', link: '/boidcore/install/windows' },
                       { text: 'Ubuntu', link: '/boidcore/install/ubuntu' },
                       { text: 'MacOS', link: '/boidcore/install/macos' }
-                      
+
                     ]
                   },
                   {
@@ -84,7 +84,7 @@ export default {
                       { text: 'Einstein@Home', link: '/boidcore/modules/einstein' },
                       { text: 'Cudos', link: '/boidcore/modules/cudos' },
                       { text: 'WCG', link: '/boidcore/modules/wcg' },
-                      { text: 'IPFS', link: '/boidcore/modules/ipfs' }                      
+                      { text: 'IPFS', link: '/boidcore/modules/ipfs' }
                     ]
                   },
                   {
@@ -128,9 +128,8 @@ export default {
                                   { text: 'Nft', link: '/boidcore/telos/actions/nft' },
                                   { text: 'Offers', link: '/boidcore/telos/actions/offers' },
                                   { text: 'Power', link: '/boidcore/telos/actions/power' },
-                                  { text: 'Powermods', link: '/boidcore/telos/actions/powermods' },
+                                  { text: 'Boosters', link: '/boidcore/telos/actions/boosters' },
                                   { text: 'Stake', link: '/boidcore/telos/actions/stake' },
-                                  { text: 'Stats', link: '/boidcore/telos/actions/stats' },
                                   { text: 'Team', link: '/boidcore/telos/actions/team' },
                                   { text: 'Transfers', link: '/boidcore/telos/actions/transfers' }
                                 ]
@@ -142,12 +141,12 @@ export default {
                                   { text: 'Accounts', link: '/boidcore/telos/tables/accounts' },
                                   { text: 'Auth', link: '/boidcore/telos/tables/auth' },
                                   { text: 'Config', link: '/boidcore/telos/tables/config' },
-                                  { text: 'Deposits', link: '/boidcore/telos/tables/deposits' },
+                                  { text: 'Sponsors', link: '/boidcore/telos/tables/sponsors' },
                                   { text: 'Global', link: '/boidcore/telos/tables/global' },
                                   { text: 'Nftmint', link: '/boidcore/telos/tables/nftmint' },
                                   { text: 'NFT', link: '/boidcore/telos/tables/nfts' },
                                   { text: 'Offers', link: '/boidcore/telos/tables/offers' },
-                                  { text: 'Pwrmods', link: '/boidcore/telos/tables/pwrmods' },
+                                  { text: 'Boosters', link: '/boidcore/telos/tables/boosters' },
                                   { text: 'Stakes', link: '/boidcore/telos/tables/stakes' },
                                   { text: 'Stats', link: '/boidcore/telos/tables/stats' },
                                   { text: 'Teams', link: '/boidcore/telos/tables/teams' }
@@ -193,5 +192,5 @@ export default {
             message: 'Boid.com',
             copyright: 'Copyright © 2022'
           }
-      }    
+      }
   }
