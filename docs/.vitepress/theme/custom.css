@@ -91,6 +91,10 @@
 
 }
 
+.dark .VPSwitch.VPSwitchAppearance .span .icon {
+    background-color: #a36615;
+}
+
 @media (min-width: 960px) {
     .dark .VPNavBar {
         background: #004573 !important; /* top at nav bar at dark mode */

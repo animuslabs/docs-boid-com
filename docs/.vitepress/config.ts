@@ -65,6 +65,7 @@ export default {
               ],
                 '/boidcore/': [
                       { text: 'Validators', link: '/boidcore/validators/general'},
+                      { text: 'Tokenomics', link: '/boidcore/tokenomics'},
                       {
                         text: 'Modules',
                         collapsible: true,
