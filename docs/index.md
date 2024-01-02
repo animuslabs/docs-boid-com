@@ -11,6 +11,6 @@ hero:
       text: Docs
       link: /introduction/
     - theme: alt
-      text: BoidApp
-      link: https://app.boid.com
+      text: BoidHub
+      link: https://testnet.hub.boid.com
 ---

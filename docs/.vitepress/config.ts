@@ -13,7 +13,7 @@ export default {
     //     ['meta', { name: "theme-color", content: "#ffffff"}],
         ['link', { rel: "stylesheet", href: "./theme/fonts/NordiquePro-Regular.ttf"}],
         ['link', { rel: "stylesheet", href: "./theme/fonts/NordiquePro-Semibold.ttf"}],
-        ['link', { rel: "stylesheet", href: "./theme/fonts/Questrial-Regular.ttf"}]
+        ['link', { rel: "stylesheet", href: "./theme/fonts/Questrial-Regular.ttf"}]        
       ],
     themeConfig: {
         logo: { dark: "/boid_logo_white.png", light: "/boid_logo_dark.png" },
@@ -26,8 +26,8 @@ export default {
               text: 'Boid Links',
               items: [
                 { text: 'boid.com', link: 'https://boid.com' },
-                { text: 'Boid App', link: 'https://app.boid.com' },
-                { text: 'PowerPools', link: 'https://powerpools.io' },
+                { text: 'Boid Hub', link: 'https://testnet.hub.boid.com' },
+                { text: 'Boid NFTs', link: 'https://nft.boid.com' },
                 { text: 'Boid Avatars', link: 'https://avatar.boid.com' }
             ]},
             {
@@ -38,9 +38,9 @@ export default {
             ]}
           ],
         socialLinks: [
-                { icon: {svg: '<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><g transform="matrix(1.8086 0 0 1.8086 499.9991 499.9991)" id="196715"><g transform="matrix(1 0 0 1 -0.925 -159.775)" id="Capa_1"><circle style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; is-custom-font: none; font-file-url: none; fill: rgb(118,117,111); fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="58.694"/></g><g transform="matrix(1 0 0 1 0.0534 69.404)" id="Capa_1"><path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; is-custom-font: none; font-file-url: none; fill: rgb(118,117,111); fill-rule: nonzero; opacity: 1;" transform=" translate(-251.3773, -320.728)" d="M 455.861 253.028 l -54.703 -11.411 c -18.637 -3.904 -37.037 4.638 -46.765 19.824 c -9.448 -4.853 -19.608 -9.038 -30.415 -12.511 v -32.529 c 0.022 -24.612 -20.126 -44.738 -44.651 -44.738 h -55.933 c -24.655 0 -44.716 20.126 -44.716 44.738 v 32.701 c -10.699 3.408 -20.751 7.593 -30.264 12.468 c -9.728 -15.251 -28.15 -23.857 -46.809 -19.953 l -54.747 11.411 c -24.03 5.026 -39.626 28.862 -34.6 52.978 l 13.741 65.64 c 4.983 24.051 28.84 39.647 52.892 34.621 l 17.321 -3.624 c 8.671 12.813 20.665 24.569 36.023 34.621 c 31.989 20.967 74.247 32.529 119.092 32.529 c 68.617 0 127.721 -27.589 154.943 -67.215 l 17.602 3.689 c 24.03 5.004 47.887 -10.57 52.87 -34.621 l 13.762 -65.64 C 495.508 281.89 479.912 258.054 455.861 253.028 z M 251.305 447.381 c -40.51 0 -78.475 -10.203 -106.797 -28.862 c -9.707 -6.342 -17.753 -13.395 -24.202 -20.945 l 13.266 -2.783 c 24.073 -5.004 39.669 -28.84 34.643 -52.913 l -12.317 -59.018 c 7.183 -3.861 14.733 -7.248 22.757 -10.138 v 10.764 c 0 24.569 20.104 44.695 44.716 44.695 h 55.933 c 24.548 0 44.652 -20.147 44.652 -44.695 v -11.325 c 8.175 2.912 15.854 6.256 22.973 10.052 L 334.439 341.9 c -4.983 24.073 10.591 47.909 34.664 52.913 l 13.395 2.804 C 357.52 427.191 308.101 447.381 251.305 447.381 z" stroke-linecap="round"/></g><g transform="matrix(1 0 0 1 192.63 -82.616)" id="Capa_1"><circle style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; is-custom-font: none; font-file-url: none; fill: rgb(118,117,111); fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="58.694"/></g><g transform="matrix(1 0 0 1 -192.6051 -82.6196)" id="Capa_1"><path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; is-custom-font: none; font-file-url: none; fill: rgb(118,117,111); fill-rule: nonzero; opacity: 1;" transform=" translate(-58.719, -168.7044)" d="M 70.736 226.172 c 31.752 -6.644 52.029 -37.77 45.471 -69.501 c -6.687 -31.709 -37.749 -52.072 -69.523 -45.428 c -31.709 6.622 -52.072 37.727 -45.428 69.458 C 7.879 212.453 38.984 232.795 70.736 226.172 z" stroke-linecap="round"/></g></g></g></svg>'}, link: 'https://community.boid.com' },
+                { icon: {svg: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M9.25 4C9.25 2.48122 10.4812 1.25 12 1.25C13.5188 1.25 14.75 2.48122 14.75 4C14.75 5.51878 13.5188 6.75 12 6.75C10.4812 6.75 9.25 5.51878 9.25 4Z"/><path d="M8.22309 11.5741L6.04779 10.849C5.42206 10.6404 5 10.0548 5 9.39526C5 8.41969 5.89953 7.69249 6.85345 7.89691L8.75102 8.30353C8.85654 8.32614 8.9093 8.33744 8.96161 8.34826C10.966 8.76286 13.034 8.76286 15.0384 8.34826C15.0907 8.33744 15.1435 8.32614 15.249 8.30353L17.1465 7.8969C18.1005 7.69249 19 8.41969 19 9.39526C19 10.0548 18.5779 10.6404 17.9522 10.849L15.7769 11.5741C15.514 11.6617 15.3826 11.7055 15.2837 11.7666C14.9471 11.9743 14.7646 12.361 14.8182 12.753C14.834 12.8681 14.8837 12.9974 14.9832 13.256L16.23 16.4977C16.6011 17.4626 15.8888 18.4997 14.8549 18.4997C14.3263 18.4997 13.8381 18.2165 13.5758 17.7574L12 14.9997L10.4242 17.7574C10.1619 18.2165 9.67373 18.4997 9.14506 18.4997C8.11118 18.4997 7.39889 17.4626 7.77003 16.4977L9.01682 13.256C9.11629 12.9974 9.16603 12.8681 9.18177 12.753C9.23536 12.361 9.05287 11.9743 8.71625 11.7666C8.61741 11.7055 8.48597 11.6617 8.22309 11.5741Z"/><path d="M12 21.9998C17.5228 21.9998 22 19.9851 22 17.4998C22 15.778 19.8509 14.282 16.694 13.5254L17.63 15.959C18.379 17.9065 16.9415 19.9996 14.8549 19.9996C13.788 19.9996 12.8028 19.4279 12.2735 18.5015L12 18.0229L11.7265 18.5015C11.1972 19.4279 10.212 19.9996 9.14506 19.9996C7.05851 19.9996 5.62099 17.9065 6.37001 15.959L7.30603 13.5254C4.14907 14.282 2 15.778 2 17.4998C2 19.9851 6.47715 21.9998 12 21.9998Z"/></svg>'}, link: 'https://community.boid.com' },
                 { icon: 'facebook', link: 'https://www.facebook.com/boidcom' },
-                { icon: 'discord', link: 'https://discord.gg/92UZ4s6Y48' },
+                { icon: {svg: '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 455 455" xml:space="preserve"> <g> <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M0,0v455h455V0H0z M384.814,100.68l-53.458,257.136 c-1.259,6.071-8.378,8.822-13.401,5.172l-72.975-52.981c-4.43-3.217-10.471-3.046-14.712,0.412l-40.46,32.981 c-4.695,3.84-11.771,1.7-13.569-4.083l-28.094-90.351l-72.583-27.089c-7.373-2.762-7.436-13.171-0.084-16.003L373.36,90.959 C379.675,88.517,386.19,94.049,384.814,100.68z"/> <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M313.567,147.179l-141.854,87.367c-5.437,3.355-7.996,9.921-6.242,16.068 l15.337,53.891c1.091,3.818,6.631,3.428,7.162-0.517l3.986-29.553c0.753-5.564,3.406-10.693,7.522-14.522l117.069-108.822 C318.739,149.061,316.115,145.614,313.567,147.179z"/> </g> </svg>'}, link: 'https://t.me/boidcommunity' },
                 { icon: 'twitter', link: 'https://twitter.com/boidcom' },
                 { icon: 'github', link: 'https://github.com/boid-com' },
 
@@ -64,56 +64,21 @@ export default {
                 }
               ],
                 '/boidcore/': [
-                  {
-                    text: 'Client Installation',
-                    collapsible: true,
-                    collapsed: true,
-                    items: [
-                      { text: 'Windows', link: '/boidcore/install/windows' },
-                      { text: 'Ubuntu', link: '/boidcore/install/ubuntu' },
-                      { text: 'MacOS', link: '/boidcore/install/macos' }
-
-                    ]
-                  },
-                  {
-                    text: 'Modules',
-                    collapsible: true,
-                    collapsed: true,
-                    items: [
-                      { text: 'Folding@Home', link: '/boidcore/modules/folding' },
-                      { text: 'Einstein@Home', link: '/boidcore/modules/einstein' },
-                      { text: 'Cudos', link: '/boidcore/modules/cudos' },
-                      { text: 'WCG', link: '/boidcore/modules/wcg' },
-                      { text: 'IPFS', link: '/boidcore/modules/ipfs' }
-                    ]
-                  },
-                  {
-                    text:'Validators',
-                    collapsible: true,
-                    collapsed: true,
-                    items: [
-                      { text: 'General Info', link: '/boidcore/validators/general'},
-                      { text: 'Installation', link: '/boidcore/validators/install'}
-                    ]
-                  },
-                  {
-                    text:'EOS',
-                    collapsible: true,
-                    collapsed: true,
-                    items: [
-                          { text: 'Main Token Contract', link: '/boidcore/eos/token-contract' },
-                          { text: 'PowerPools', link: '/boidcore/eos/powerpools' },
-                          { text: 'EOS Powerup', link: '/boidcore/eos/eospowerup' }
-                    ]
-                  },
-                  {
-                    text: 'Telos',
-                    collapsible: true,
-                    collapsed: true,
-                    items: [
+                      { text: 'Validators', link: '/boidcore/validators/general'},
+                      {
+                        text: 'Modules',
+                        collapsible: true,
+                        collapsed: true,
+                        items: [
+                          { text: 'Folding@Home', link: '/boidcore/modules/folding' },
+                          { text: 'IPFS', link: '/boidcore/modules/ipfs' },
+                          { text: 'Future', link: '/boidcore/modules/index' }
+                        ]
+                      },
                       {
                         text: 'Core contract',
                         collapsible: true,
+                        collapsed: false,
                         items: [
                               { text: 'Intro', link: '/boidcore/telos/contract-index/index' },
                               { text: 'Terminology', link: '/boidcore/telos/contract-index/terms' },
@@ -162,8 +127,6 @@ export default {
                               }
                         ]
                       }
-                    ]
-                  }
                 ],
                 '/boidverse/': [
                   {
@@ -187,10 +150,6 @@ export default {
                     ]
                   }
                 ]
-            },
-          footer: {
-            message: 'Boid.com',
-            copyright: 'Copyright © 2022'
-          }
+            }
       }
   }

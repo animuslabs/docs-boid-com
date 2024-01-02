@@ -30,6 +30,5 @@ const { Layout } = DefaultTheme
    <!-- <template #aside-outline-after>aside-outline-after</template> -->
    <!-- <template #aside-ads-before></template>
    <template #aside-ads-after></template> -->
-
   </Layout>
 </template>
