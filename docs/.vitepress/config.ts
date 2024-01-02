@@ -79,7 +79,7 @@ export default {
                       {
                         text: 'Core contract',
                         collapsible: true,
-                        collapsed: false,
+                        collapsed: true,
                         items: [
                               { text: 'Intro', link: '/boidcore/telos/contract-index/index' },
                               { text: 'Terminology', link: '/boidcore/telos/contract-index/terms' },
@@ -87,6 +87,7 @@ export default {
                               {
                                 text: 'Actions',
                                 collapsible: true,
+                                collapsed: true,
                                 items: [
                                   { text: 'Accounts', link: '/boidcore/telos/actions/accounts' },
                                   { text: 'Auth', link: '/boidcore/telos/actions/auth' },
@@ -103,6 +104,7 @@ export default {
                               {
                                 text: 'Tables',
                                 collapsible: true,
+                                collapsed: true,
                                 items: [
                                   { text: 'Accounts', link: '/boidcore/telos/tables/accounts' },
                                   { text: 'Auth', link: '/boidcore/telos/tables/auth' },
@@ -121,6 +123,7 @@ export default {
                               {
                                 text: 'More',
                                 collapsible: false,
+                                collapsed: true,
                                 items: [
                                   { text: 'Notifications', link: '/boidcore/telos/contract-index/notifications' },
                                   { text: 'Functions', link: '/boidcore/telos/contract-index/functions' }
@@ -146,7 +149,6 @@ export default {
                     items: [
                       { text: 'Forest', link: '/boidverse/elements/forest' },
                       { text: 'Colony', link: '/boidverse/elements/colony' },
-                      { text: 'PowerPools', link: '/boidcore/eos/powerpools' },
                       { text: 'BoidVoid', link: '/boidverse/elements/boidvoid' }
                     ]
                   }
