@@ -53,16 +53,78 @@ Boid-Logo-dark
 <a href="/logo/boid_logo_white.png" download="Boid-logo-white.png">
 Boid-Logo-white
 </a>
+<p></p>
+<a href="/logo/boid_500x500px_neg_bluebg.png" download="boid_500x500px_neg_bluebg.png">
+Boid-Logo-Vertical
+</a>
+
+<a href="/logo/boid_500x500px_neg.png" download="boid_500x500px_neg.png">
+Boid-Logo-Vertical-white
+</a>
+<p></p>
+<a href="/logo/boid_500x500px_pos.png" download="boid_500x500px_pos.png">
+Boid-Logo-Vertical-dark
+</a>
 
 ## Favicons
 <a href="/favicon_package_v0.16-navy.zip" download="favicon_package_v0.16-navy.zip">
 favicon_package_v0.16-navy.zip
 </a>  
-
-<b></b>
+<p></p>
 <a href="/favicon.zip" download="favicon.zip">
 favicon.zip
 </a>
 
-## BoidVerse
 
+## BoidVerse
+![BoidVerse Logo](/logo/boidverse/horizontal/boidverse_neg_transparentz-small.png)
+
+### Horizontal
+<a href="/logo/boidverse/horizontal/boidverse_neg_bg.png" download="boidverse_neg_bg.png">
+boidverse_neg_bg.png
+</a>
+<p></p>
+<a href="/logo/boidverse/horizontal/boidverse_neg_grz.png" download="boidverse_neg_grz.png">
+boidverse_neg_grz.png
+</a>
+<p></p>
+<a href="/logo/boidverse/horizontal/boidverse_neg_transparentz-small.png" download="boidverse_neg_transparentz-small.png">
+boidverse_neg_transparentz-small.png
+</a>
+<p></p>
+<a href="/logo/boidverse/horizontal/boidverse_neg_transparentz.png" download="boidverse_neg_transparentz.png">
+boidverse_neg_transparentz.png
+</a>
+<p></p>
+<a href="/logo/boidverse/horizontal/boidverse_pos_bg.png" download="boidverse_boidverse_pos_bg.png">
+boidverse_pos_bg.png
+</a>
+<p></p>
+<a href="/logo/boidverse/horizontal/boidverse_pos_nobg-small.png" download="boidverse_pos_nobg-small.png">
+boidverse_pos_nobg-small.png
+</a>
+<p></p>
+<a href="/logo/boidverse/horizontal/logo_pos_nobg.png" download="logo_pos_nobg.png">
+logo_pos_nobg.png
+</a>
+
+### Vertical
+<a href="/logo/boidverse/vertical/boidverse_500x500px_neg_bg_gr.png" download="boidverse_500x500px_neg_bg_gr.png">
+boidverse_500x500px_neg_bg_gr.png
+</a>
+<p></p>
+<a href="/logo/boidverse/vertical/boidverse_500x500px_neg_bg.png" download="boidverse_500x500px_neg_bg.png">
+boidverse_500x500px_neg_bg.png
+</a>
+<p></p>
+<a href="/logo/boidverse/vertical/boidverse_500x500px_neg_nobg.png" download="boidverse_500x500px_neg_nobg.png">
+boidverse_500x500px_neg_nobg.png
+</a>
+<p></p>
+<a href="/logo/boidverse/vertical/boidverse_500x500px_pos_bg.png" download="boidverse_500x500px_pos_bg.png">
+boidverse_500x500px_pos_bg.png
+</a>
+<p></p>
+<a href="/logo/boidverse/vertical/boidverse_500x500px_pos.png" download="boidverse_500x500px_pos.png">
+boidverse_500x500px_pos.png
+</a>
