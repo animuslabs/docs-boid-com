@@ -1,19 +1,4 @@
 # Boid Core & Boid Verse
-Boid is a radical new take on The Play-to-Earn model driving players incentivizing them to put forth their spare computing power helping to solve some of the worlds greatest diseases, including Cancer, while being rewarded greatly for their time in game. To learn more about it you can read detailed documentation on this portal.
+Boid began with the mission to reward users for donating their spare resources to scientific research. Since its inception on August 18, 2018, Boid has evolved through various iterations of its reward system. It appeals to a diverse group, whether you are motivated by a vision of a disease-free world, are a gamer with resources to spare, or an NFT enthusiast.
 
-## Who is Boid for?
-Boid is for anyone who wants to be part of something huge. We designed Boid from the ground up to be as accessible as technologically possible. Anyone with a computer (or compatible smartphone) and internetconnection can use Boid.
-
-## How do I get Started?
-
-Currently BOID is particpating in Folding at Home (Aka F@H) to join us go to https://foldingathome.org/alternative-downloads/ and pick your version. Currently F@H supports Windows 32&64bit, macOS 10.7+,  most major Linux Distros, ARM and Rasberry PI, as well as Docker (Instructions https://hub.docker.com/r/foldingathome/fah-gpu?lng=en) and vSphere (instructions https://flings.vmware.com/vmware-appliance-for-folding-home).
-
-Once you have installed F@H the first thing to do is input your user name and team number,the Boid Team is 238663.
-
-## How do I get paid?
-
-At this time BOID will continue twards a full deployment on Telos in addition to EOS, and are currently paying out work from Folding at Home on the Telos chain at periodic intervals.
-
-## How do I move my BOID between chains:
-
-https://community.boid.com/t/boid-token-on-telos/479#:~:text=To%20transfer%20BOID,Telos%20to%20EOS.
+[BoidVerse](https://universe.boid.com/), as an innovative extension of Boid, offers a fresh perspective on the Play-to-Earn model. Here, the community, equipped with Boid Power and BOID tokens, isn't just playing games; they are integral to the development and expansion of the BoidVerse. This approach fosters a unique, community-driven project where users actively participate not only in gaming but also in shaping the BoidVerse and its [lore](https://lore.boid.com/). By engaging in this collaborative space, users contribute to both the narrative and the scientific goals of Boid, blending entertainment with meaningful impact.
