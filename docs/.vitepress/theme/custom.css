@@ -95,6 +95,21 @@
     background-color: #a36615;
 }
 
+.color-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.color-container img {
+    flex: 0 0 40%; /* Adjust the percentage as needed */
+    max-width: 48%;
+    height: auto;
+    margin-bottom: 10px; /* Space between rows */
+    margin: 5px;
+}
+
+
 @media (min-width: 960px) {
     .dark .VPNavBar {
         background: #004573 !important; /* top at nav bar at dark mode */
@@ -107,5 +122,13 @@
     }
     .VPNavBar.has-sidebar .content{
         background: #FFF !important;
+    }
+
+}
+
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+    .color-container img {
+        flex: 0 0 100%;
+        max-width: 100%;
     }
 }
