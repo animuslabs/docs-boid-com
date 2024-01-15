@@ -21,12 +21,16 @@ BOID token light
 </a>
 
 ## Fonts
+![Nordique Pro](/fonts/NordiquePro-Example.jpg)
 [Nordique Pro Bold .OTF](/fonts/Nordique-Pro-Bold.otf)  
 [Nordique Pro Light .OTF](/fonts/Nordique-Pro-Light.otf)  
 [Nordique Pro Regular .OTF](/fonts/Nordique-Pro-Regular.otf)  
 [Nordique Pro Regular .TTF](/fonts/Nordique-Pro-Regular.ttf)  
 [Nordique Pro Semibold .OTF](/fonts/Nordique-Pro-Semibold.otf)  
 [Nordique Pro Semibold .TTF](/fonts/Nordique-Pro-Semibold.ttf)  
+<p></p>
+
+![Questrial Regular](/fonts/QuestrialRegular-Example.jpg)
 [Questrial Regular .TTF](/fonts/Questrial-Regular.ttf)
 
 ## Boid Logo
