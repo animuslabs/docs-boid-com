@@ -2,15 +2,6 @@ export default {
     title: 'BoidVerse',
     description: 'Metaverse that makes a difference',
     head: [
-    //     ['link', { rel: "apple-touch-icon", sizes: "180x180", href: "/assets/favicons/apple-touch-icon.png"}],
-        // ['link', { rel: "icon", type: "image/png", sizes: "32x32", href: "/docs/public/favicons__universe.png"}],
-        // ['link', { rel: "icon", type: "image/png", sizes: "16x16", href: "/docs/public/favicons__universe.png"}],
-    //     ['link', { rel: "manifest", href: "/assets/favicons/site.webmanifest"}],
-    //     ['link', { rel: "mask-icon", href: "/assets/favicons/safari-pinned-tab.svg", color: "#3a0839"}],
-        // ['link', { rel: "shortcut icon", href: "/docs/public/favicons__universe.png"}],
-    //     ['meta', { name: "msapplication-TileColor", content: "#3a0839"}],
-    //     ['meta', { name: "msapplication-config", content: "/assets/favicons/browserconfig.xml"}],
-    //     ['meta', { name: "theme-color", content: "#ffffff"}],
         ['link', { rel: "stylesheet", href: "./theme/fonts/NordiquePro-Regular.ttf"}],
         ['link', { rel: "stylesheet", href: "./theme/fonts/NordiquePro-Semibold.ttf"}],
         ['link', { rel: "stylesheet", href: "./theme/fonts/Questrial-Regular.ttf"}]        
@@ -46,43 +37,12 @@ export default {
 
             ],
             sidebar: {
-              '/introduction/': [
-                {
-                  text: 'Welcome Boiders!',
-                  items: [
-                    { text: 'Introduction', link: '/introduction/' },
-                    { text: 'Branding', link: '/introduction/branding' },
-                    { text: 'FAQ', link: '/introduction/faq' }
-                  ]
-                },
-                {
-                  text: 'Boid Flavours',
-                  items: [
-                    { text: 'Boid Core', link: '/boidcore/' },
-                    { text: 'Boid Verse', link: '/boidverse/' }
-                  ]
-                }
-              ],
                 '/boidcore/': [
-                      { text: 'Validators', link: '/boidcore/validators/general'},
-                      { text: 'Tokenomics', link: '/boidcore/tokenomics'},
-                      {
-                        text: 'Modules',
-                        collapsible: true,
-                        collapsed: true,
-                        items: [
-                          { text: 'Folding@Home', link: '/boidcore/modules/folding' },
-                          { text: 'IPFS', link: '/boidcore/modules/ipfs' },
-                          { text: 'Future', link: '/boidcore/modules/index' }
-                        ]
-                      },
                       {
                         text: 'Core contract',
                         collapsible: true,
                         collapsed: true,
                         items: [
-                              { text: 'Intro', link: '/boidcore/telos/contract-index/index' },
-                              { text: 'Terminology', link: '/boidcore/telos/contract-index/terms' },
                               { text: 'Guides', link: '/boidcore/telos/contract-index/guides' },
                               {
                                 text: 'Actions',
@@ -129,6 +89,21 @@ export default {
                                   { text: 'Functions', link: '/boidcore/telos/contract-index/functions' }
                                 ]
                               }
+                        ]
+                      },
+                      { text: 'Branding', link: '/boidcore/branding' },
+                      { text: 'Validators', link: '/boidcore/validators/general'},
+                      { text: 'Tokenomics', link: '/boidcore/tokenomics'},
+                      { text: 'Terminology', link: '/boidcore/telos/contract-index/terms' },
+                      { text: 'FAQ', link: '/boidcore/faq' },
+                      {
+                        text: 'Modules',
+                        collapsible: true,
+                        collapsed: true,
+                        items: [
+                          { text: 'Folding@Home', link: '/boidcore/modules/folding' },
+                          { text: 'IPFS', link: '/boidcore/modules/ipfs' },
+                          { text: 'Future', link: '/boidcore/modules/index' }
                         ]
                       }
                 ],

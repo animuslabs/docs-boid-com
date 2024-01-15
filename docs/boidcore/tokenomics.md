@@ -10,6 +10,7 @@ Buying BOID with EOS or TLOS from CEX:
 - ensure that you already have an EOS or Telos account set up
 - from any exchange that has EOS or TLOS listed send your tokens to the account "swapper.boid"
 - include a memo containing your own EOS or Telos account name when sending the tokens. This step is crucial, as it ensures that your BOID tokens are correctly deposited into your account.
+- don't try to buy large amounts as it will use whatever chain liquidity that is available at that moment, slippage can potentially be high.
 ______________________________________________________________
 💡 Important IBC Info! 💡
 - BOID is currently available on EOS and Telos

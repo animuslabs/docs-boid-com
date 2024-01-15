@@ -1,16 +1,24 @@
----
-title: BoidVerse Gossip
-lang: en-US
-lastUpdated: false
-layout: home
-hero:
-  text: "Metaverse that makes a difference"
-  tagline: Together we power the change.
-  actions:
-    - theme: brand
-      text: Docs
-      link: /introduction/
-    - theme: alt
-      text: BoidHub
-      link: https://testnet.hub.boid.com
----
+# Welcome to Boid docs!
+<p></p>
+<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+  <div class="card">
+    <h2>BoidCore</h2>
+    <ul>
+      <li><a href="/boidcore/telos/contract-index/">Contract Intro</a></li>
+      <li><a href="/boidcore/telos/actions/accounts">Actions</a></li>
+      <li><a href="/boidcore/telos/tables/accounts">Tables</a></li>
+      <li><a href="/boidcore/validators/general">Validators</a></li>
+      <li><a href="/boidcore/tokenomics">Tokenomics</a></li>
+      <li><a href="/boidcore/telos/contract-index/terms">Terminology</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>BoidVerse</h2>
+    <ul>
+      <li><a href="/boidverse/elements/boidvoid">BoidVoid</a></li>
+      <li><a href="/boidverse/nfts/avatars">BoidAvatars</a></li>
+      <li><a href="/boidverse/nfts/science">BoidScience NFTs</a></li>
+    </ul>
+  </div>
+</div>

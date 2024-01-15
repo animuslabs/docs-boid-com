@@ -95,6 +95,22 @@
     background-color: #a36615;
 }
 
+.card {
+    border-radius: 15px;
+    padding: 20px;
+    margin: 5px;
+    width: 45%;
+  }
+  
+.card {
+    border: 2px solid #004573; /* Light mode color */
+  }
+  
+.dark .card {
+    border: 2px solid #FFF; /* Dark mode color */
+  }
+  
+
 .color-container {
     display: flex;
     flex-wrap: wrap;
