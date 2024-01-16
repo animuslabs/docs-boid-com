@@ -18,3 +18,5 @@ Every user on the Boid platform will be encoruged to get their own Avatar. Boid 
   | Legendary    | 10         |
 
 - we have a great explainer video that shows step by step how to mint an avatar and create a template [HERE](https://youtu.be/beZnlD1KyEY?si=b-mzmk72hIg0OMUQ)
+- you can purchase Avatars on an open market on AtomicHub on EOS [HERE](https://eos.atomichub.io/market?primary_chain=eos-mainnet&collection_name=avatar.boid)
+- you can see whole Avatar collection on AtomicHub on EOS [HERE](https://eos.atomichub.io/explorer/schema/eos-mainnet/avatar.boid/boidavatars)
