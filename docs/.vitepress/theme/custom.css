@@ -1,4 +1,6 @@
 /* .vitepress/theme/custom.css */
+@import 'katex/dist/katex.min.css';
+
 :root {
     --vp-c-brand-1: #3EAD5C;  /* solid color for text */
     --vp-c-brand-2: #3EAD5C;  /* hover state color */
