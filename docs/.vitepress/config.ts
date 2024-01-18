@@ -123,6 +123,7 @@ export default {
                     collapsible: true,
                     items: [
                       { text: 'Game Introduction', link: '/boidverse/boidvoid/Introduction' },
+                      { text: 'Game Tutorial', link: '/boidverse/boidvoid/tutorial' },
                       { text: 'Map Creator', link: '/boidverse/boidvoid/MapCreator' }
                     ]
                   }
