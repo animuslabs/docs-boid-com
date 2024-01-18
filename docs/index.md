@@ -16,7 +16,8 @@
   <div class="card">
     <h2>BoidVerse</h2>
     <ul>
-      <li><a href="/boidverse/boidvoid/Introduction">Game Introduction</a></li>
+      <li><a href="/boidverse/boidvoid/Introduction">BoidVoid Introduction</a></li>
+      <li><a href="/boidverse/boidvoid/tutorial">BoidVoid Tutorial</a></li>
       <li><a href="/boidverse/boidvoid/MapCreator">BoidVoid Map</a></li>
       <li><a href="/boidverse/nfts/avatars">BoidAvatars</a></li>
       <li><a href="/boidverse/nfts/science">BoidScience NFTs</a></li>
