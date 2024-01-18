@@ -1,6 +1,7 @@
 # BoidVoid Map Creator
 Any community member can create a map that can be used in a new BoidVoid game.
 Map creator is best to be used on a desktop device.
+Check it out [HERE](https://map.void.boid.com)
 
 ## Name & Size
 Home page allows users to select the size and name of the map they wish to create or

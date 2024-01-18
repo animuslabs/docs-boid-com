@@ -119,11 +119,11 @@ export default {
                     ]
                   },
                   {
-                    text: 'Components',
+                    text: 'BoidVoid',
                     collapsible: true,
                     items: [
-                      { text: 'BoidVoid Game', link: '/boidverse/components/boidvoid' },
-                      { text: 'BoidVoid Map', link: '/boidverse/components/boidvoidMapCreator' }
+                      { text: 'Game Introduction', link: '/boidverse/boidvoid/Introduction' },
+                      { text: 'Map Creator', link: '/boidverse/boidvoid/MapCreator' }
                     ]
                   }
                 ]
