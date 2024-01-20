@@ -23,7 +23,17 @@ When an account with a sponsor earns Boid Power a percent of the power is shared
 BOID are EOSIO based tokens issued on EOS and bridged to other chains. It's the native currency in Boid and is used in every boid application in some way.
 
 ## BOID stake
-BOID tokens can be locked up by an account to stake them. When staked by an account with Boid Power BOID tokens can be 'Powered' with Boid Power to generate additional BOID rewards. There is a limit to the amount of stake an account can power called the `Max Powered Stake`, the MPS for an account is determined by the Boid Power.
+Staking BOID tokens means locking them up within the Boid platform. When you stake your BOID tokens, you're essentially depositing them into the system, similar to putting money in a savings account, except here, it's for specific purposes within the Boid ecosystem. There are different ways to stake. You can stake to yourself or to another user or a team.
+
+## BOID delegated Stake
+This is the amount of BOID tokens that others have staked, but they've chosen to support you with their stake. It's like allies in a game pooling their resources with you, but they still own their resources.
+
+## BOID powered stake
+When staked by an account with Boid Power, BOID tokens can be 'Powered' with Boid Power to generate additional BOID rewards. There is a limit to the amount of stake an account can power called the `Max Powered Stake`, the MPS for an account is determined by the Boid Power rating.  
+In more detail:  
+We take the account's: Boid power rating, BOID self staked value, BOID delegated stake value. From the main Boid core config: powered stake multiplier. Then we calculate:
+1. <MathDisplay content="\text{user's power + powered stake multiplier = max powered stake}%" />
+2. <MathDisplay content="\text{user's self stake + user's delegated stake ≤ max powered stake}%" />
 
 ## PowerMods
 A PowerMod can multiply and/or add power to an account over time. Available PowerMods can be registerd by the system and Offers can apply PowerMods in exchange for various activity or rewards. Accounts can have multiple PowerMods applied at once and the PowerMods may expire due to usage or time.
