@@ -23,11 +23,11 @@ BOID token light
 ## Fonts
 ![Nordique Pro](/fonts/NordiquePro-Example.jpg)
 [Nordique Pro Bold .OTF](/fonts/Nordique-Pro-Bold.otf)  
-[Nordique Pro Light .OTF](/fonts/Nordique-Pro-Light.otf)  
-[Nordique Pro Regular .OTF](/fonts/Nordique-Pro-Regular.otf)  
-[Nordique Pro Regular .TTF](/fonts/Nordique-Pro-Regular.ttf)  
-[Nordique Pro Semibold .OTF](/fonts/Nordique-Pro-Semibold.otf)  
-[Nordique Pro Semibold .TTF](/fonts/Nordique-Pro-Semibold.ttf)  
+[Nordique Pro Light .OTF](/fonts/NordiquePro-Light.otf)  
+[Nordique Pro Regular .OTF](/fonts/NordiquePro-Regular.otf)  
+[Nordique Pro Regular .TTF](/fonts/NordiquePro-Regular.ttf)  
+[Nordique Pro Semibold .OTF](/fonts/NordiquePro-Semibold.otf)  
+[Nordique Pro Semibold .TTF](/fonts/NordiquePro-Semibold.ttf)  
 <p></p>
 
 ![Questrial Regular](/fonts/QuestrialRegular-Example.jpg)
@@ -54,15 +54,15 @@ Boid-Logo-dots-only-white
 Boid-Logo-white
 </a>
 <p></p>
-<a href="/logo/boid_500x500px_neg_bluebg.png" download="boid_500x500px_neg_bluebg.png">
+<a href="/logo/boid-vertical/boid_500x500px_neg_bluebg.png" download="boid_500x500px_neg_bluebg.png">
 Boid-Logo-Vertical
 </a>
 
-<a href="/logo/boid_500x500px_neg.png" download="boid_500x500px_neg.png">
+<a href="/logo/boid-vertical/boid_500x500px_neg.png" download="boid_500x500px_neg.png">
 Boid-Logo-Vertical-white
 </a>
 <p></p>
-<a href="/logo/boid_500x500px_pos.png" download="boid_500x500px_pos.png">
+<a href="/logo/boid-vertical/boid_500x500px_pos.png" download="boid_500x500px_pos.png">
 Boid-Logo-Vertical-dark
 </a>
 
