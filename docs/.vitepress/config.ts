@@ -38,6 +38,7 @@ export default {
             ],
             sidebar: {
                 '/boidcore/': [
+                      {text: 'BoidCore'},
                       {
                         text: 'Core contract',
                         collapsible: true,
@@ -108,6 +109,7 @@ export default {
                       }
                 ],
                 '/boidverse/': [
+                  {text: 'BoidVerse'},
                   {
                     text: 'NFTs',
                     collapsible: true,
