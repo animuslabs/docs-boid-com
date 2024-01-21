@@ -5,7 +5,7 @@
     <h2>BoidCore</h2>
     <ul>
       <li><a href="/boidcore/modules/folding">Folding Install Guide</a></li>
-      <li><a href="/boidcore/">Boid Core Info</a></li>
+      <li><a href="/boidcore/">BoidCore Info</a></li>
       <li><a href="/boidcore/telos/actions/accounts">Actions</a></li>
       <li><a href="/boidcore/telos/tables/accounts">Tables</a></li>
       <li><a href="/boidcore/validators/general">Validators</a></li>

@@ -1,4 +1,4 @@
-# Boid Core
+# BoidCore
 Boid began with the mission to reward users for donating their spare resources to scientific research. Since its inception on August 18, 2018, Boid has evolved through various iterations of its reward system. It appeals to a diverse group, whether you are motivated by a vision of a disease-free world, are a gamer with resources to spare, or an NFT enthusiast.
 
 

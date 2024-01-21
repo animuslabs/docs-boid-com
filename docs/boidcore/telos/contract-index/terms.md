@@ -31,7 +31,7 @@ This is the amount of BOID tokens that others have staked, but they've chosen to
 ## BOID powered stake
 When staked by an account with Boid Power, BOID tokens can be 'Powered' with Boid Power to generate additional BOID rewards. There is a limit to the amount of stake an account can power called the `Max Powered Stake`, the MPS for an account is determined by the Boid Power rating.  
 In more detail:  
-We take the account's: Boid power rating, BOID self staked value, BOID delegated stake value. From the main Boid core config: powered stake multiplier. Then we calculate:
+We take the account's: Boid power rating, BOID self staked value, BOID delegated stake value. From the main BoidCore config: powered stake multiplier. Then we calculate:
 1. <MathDisplay content="\text{user's power + powered stake multiplier = max powered stake}%" />
 2. <MathDisplay content="\text{user's self stake + user's delegated stake ≤ max powered stake}%" />
 
