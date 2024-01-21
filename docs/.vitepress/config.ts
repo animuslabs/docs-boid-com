@@ -95,7 +95,6 @@ export default {
                       { text: 'Validators', link: '/boidcore/validators/general'},
                       { text: 'Tokenomics', link: '/boidcore/tokenomics'},
                       { text: 'Terminology', link: '/boidcore/telos/contract-index/terms' },
-                      { text: 'Install Folding', link: '/boidcore/folding'},
                       { text: 'FAQ', link: '/boidcore/faq' },
                       {
                         text: 'Modules',
