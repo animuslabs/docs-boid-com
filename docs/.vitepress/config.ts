@@ -17,7 +17,7 @@ export default {
               text: 'Boid Links',
               items: [
                 { text: 'boid.com', link: 'https://boid.com' },
-                { text: 'Boid Hub', link: 'https://testnet.hub.boid.com' },
+                { text: 'Boid Hub', link: 'https://hub.boid.com' },
                 { text: 'Boid NFTs', link: 'https://nft.boid.com' },
                 { text: 'Boid Avatars', link: 'https://avatar.boid.com' }
             ]},
