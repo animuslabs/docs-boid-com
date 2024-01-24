@@ -92,6 +92,7 @@ export default {
                               }
                         ]
                       },
+                      { text: 'Important accounts', link: '/boidcore/important-accounts' },
                       { text: 'Branding', link: '/boidcore/branding' },
                       { text: 'Validators', link: '/boidcore/validators/general'},
                       { text: 'Tokenomics', link: '/boidcore/tokenomics'},

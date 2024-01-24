@@ -56,7 +56,7 @@ Creates a new team.
 **Input Parameters**
 
 ```ts
-owner: Name             // Account that will own the team.
+owner: Name             // Boid account that will own the team.
 min_pwr_tax_mult: u8    // Minimum team power tax multiplier.
 owner_cut_mult: u8      // Owner's cut multiplier of the team tax.
 url_safe_name: string   // URL-safe name for the team.
