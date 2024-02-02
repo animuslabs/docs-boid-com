@@ -15,6 +15,6 @@ ______________________________________________________________
 💡 Important IBC Info! 💡
 - BOID is currently available on EOS and Telos
 - BOID token is using an official Antelope IBC bridge
-- You can move your BOID tokens between chains using [AntelopeX](https://antelopex.io/)
+- To move your BOID tokens between chains you must use [AntelopeX](https://antelopex.io/)
 - BOID token smart contract on EOS is deployed on [boidcomtoken](https://bloks.io/account/boidcomtoken) account
 - BOID token smart contract on Telos is deployed on [token.boid](https://eosauthority.com/account/token.boid?network=telos) account
