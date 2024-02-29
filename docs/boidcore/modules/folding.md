@@ -10,7 +10,7 @@ Folding@Home uses the idle processing power of your computer to simulate the fol
 
 ## Why Join the Boid.com Team?
 
-By joining the Boid.com team (Team ID: 238663) on Folding@Home and using your boid_id, you contribute to a collective effort in scientific research. Plus, as a member of our team, you are rewarded with Boid Power, which you can use within our platform.
+By joining the Boid.com team [(Team ID: 238663)](https://stats.foldingathome.org/team/238663) on Folding@Home and using your boid_id, you contribute to a collective effort in scientific research. Plus, as a member of our team, you are rewarded with Boid Power, which you can use within our platform.
 
 Boid Power symbolizes your contribution to valuable research and community efforts. It’s a way to measure the impact you're making and be part of a community dedicated to making a difference.
 

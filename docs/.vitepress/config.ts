@@ -104,6 +104,7 @@ export default {
                         collapsed: true,
                         items: [
                           { text: 'Folding@Home', link: '/boidcore/modules/folding' },
+                          { text: 'BOINC', link: '/boidcore/modules/boinc' },
                           { text: 'IPFS', link: '/boidcore/modules/ipfs' },
                           { text: 'Future', link: '/boidcore/modules/index' }
                         ]

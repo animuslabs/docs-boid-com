@@ -11,6 +11,9 @@
 - bp.boid
 - vault.boid
 - service.boid
+- ibchub.boid
+- wt.boid
+- power.boid
 
 ## EOS Mainnet Native
 - boid
@@ -26,9 +29,14 @@
 - avatar.boid
 - powerpoolsio
 - bp.boid
+- wt.tlos.boid
+- wl.wax.boid
 
 ## WAX Mainnet
 - vault.boid
 - boid
 - nft.boid
 - auth.boid
+- ibchub.boid
+- token.boid
+- wt.boid
