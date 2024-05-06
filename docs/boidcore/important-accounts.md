@@ -25,7 +25,7 @@
 - boiddonation - old donations account / NOT USED ANYMORE
 - boidcronjobs - old CronEOS worker account / NOT USED ANYMORE
 - payroll.boid - old payroll Boid DAC/DAO account (Daclify.com) / NOT USED ANYMORE
-- boidcommmint1 - old inflation account / NOT USED ANYMORE
+- boidcommint1 - old inflation account / NOT USED ANYMORE
 - avatar.boid - smart contract for Boid Avatars on EOS
 - powerpoolsio - old powerpools.io smart contract account / NOT USED ANYMORE
 - bp.boid - Boid BP account
