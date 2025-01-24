@@ -24,8 +24,7 @@ export default {
             {
               text: 'bp.boid',
               items: [
-                { text: 'Vote for us on Telos', link: 'https://eosauthority.com/vote/producers?network=telos' },
-                { text: 'Vote for us on EOS', link: 'https://eosauthority.com/vote/producers?network=eos' }
+                { text: 'Vote for us on Telos', link: 'https://eosauthority.com/vote/producers?network=telos' }
             ]}
           ],
         socialLinks: [
@@ -129,6 +128,13 @@ export default {
                       { text: 'Game Introduction', link: '/boidverse/boidvoid/Introduction' },
                       { text: 'Game Tutorial', link: '/boidverse/boidvoid/tutorial' },
                       { text: 'Map Creator', link: '/boidverse/boidvoid/MapCreator' }
+                    ]
+                  },
+                  {
+                    text: 'BoidSquadron',
+                    collapsible: true,
+                    items: [
+                      { text: 'Game Introduction', link: '/boidverse/boidsquadron/Introduction' }
                     ]
                   }
                 ]

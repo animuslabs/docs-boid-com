@@ -149,8 +149,17 @@ var assert = function assert2(value) {
   return value;
 };
 var protocolFromUrl = function protocolFromUrl2(url) {
-  var protocol = /^\s*([^\\/#]*?)(?::|&#0*58|&#x0*3a)/i.exec(url);
-  return protocol != null ? protocol[1] : "_relative";
+  var protocol = /^[\x00-\x20]*([^\\/#?]*?)(:|&#0*58|&#x0*3a|&colon)/i.exec(url);
+  if (!protocol) {
+    return "_relative";
+  }
+  if (protocol[2] !== ":") {
+    return null;
+  }
+  if (!/^[a-zA-Z][a-zA-Z0-9+\-.]*$/.test(protocol[1])) {
+    return null;
+  }
+  return protocol[1].toLowerCase();
 };
 var utils = {
   contains,
@@ -353,7 +362,11 @@ var Settings = class {
    */
   isTrusted(context) {
     if (context.url && !context.protocol) {
-      context.protocol = utils.protocolFromUrl(context.url);
+      var protocol = utils.protocolFromUrl(context.url);
+      if (protocol == null) {
+        return false;
+      }
+      context.protocol = protocol;
     }
     var trust = typeof this.trust === "function" ? this.trust(context) : this.trust;
     return Boolean(trust);
@@ -2880,7 +2893,7 @@ var sigmasAndXis = {
   sqrtRuleThickness: [0.04, 0.04, 0.04],
   // This value determines how large a pt is, for metrics which are defined
   // in terms of pts.
-  // This value is also used in katex.less; if you change it make sure the
+  // This value is also used in katex.scss; if you change it make sure the
   // values match.
   ptPerEm: [10, 10, 10],
   // The space between adjacent `|` columns in an array definition. From
@@ -3401,6 +3414,7 @@ var toNode = function toNode2(tagName) {
   }
   return node;
 };
+var invalidAttributeNameRegex = /[\s"'>/=\x00-\x1f]/;
 var toMarkup = function toMarkup2(tagName) {
   var markup = "<" + tagName;
   if (this.classes.length) {
@@ -3417,6 +3431,9 @@ var toMarkup = function toMarkup2(tagName) {
   }
   for (var attr in this.attributes) {
     if (this.attributes.hasOwnProperty(attr)) {
+      if (invalidAttributeNameRegex.test(attr)) {
+        throw new ParseError("Invalid attribute name '" + attr + "'");
+      }
       markup += " " + attr + '="' + utils.escape(this.attributes[attr]) + '"';
     }
   }
@@ -3514,7 +3531,7 @@ var Img = class {
     return node;
   }
   toMarkup() {
-    var markup = "<img  src='" + this.src + " 'alt='" + this.alt + "' ";
+    var markup = '<img src="' + utils.escape(this.src) + '"' + (' alt="' + utils.escape(this.alt) + '"');
     var styles2 = "";
     for (var style in this.style) {
       if (this.style.hasOwnProperty(style)) {
@@ -3654,7 +3671,7 @@ var SvgNode = class {
     var markup = '<svg xmlns="http://www.w3.org/2000/svg"';
     for (var attr in this.attributes) {
       if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
-        markup += " " + attr + "='" + this.attributes[attr] + "'";
+        markup += " " + attr + '="' + utils.escape(this.attributes[attr]) + '"';
       }
     }
     markup += ">";
@@ -3684,9 +3701,9 @@ var PathNode = class {
   }
   toMarkup() {
     if (this.alternate) {
-      return "<path d='" + this.alternate + "'/>";
+      return '<path d="' + utils.escape(this.alternate) + '"/>';
     } else {
-      return "<path d='" + path[this.pathName] + "'/>";
+      return '<path d="' + utils.escape(path[this.pathName]) + '"/>';
     }
   }
 };
@@ -3709,7 +3726,7 @@ var LineNode = class {
     var markup = "<line";
     for (var attr in this.attributes) {
       if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
-        markup += " " + attr + "='" + this.attributes[attr] + "'";
+        markup += " " + attr + '="' + utils.escape(this.attributes[attr]) + '"';
       }
     }
     markup += "/>";
@@ -4307,6 +4324,7 @@ defineSymbol(math, main, inner, "…", "\\ldots", true);
 defineSymbol(math, main, inner, "⋯", "\\@cdots", true);
 defineSymbol(math, main, inner, "⋱", "\\ddots", true);
 defineSymbol(math, main, textord, "⋮", "\\varvdots");
+defineSymbol(text, main, textord, "⋮", "\\varvdots");
 defineSymbol(math, main, accent, "ˊ", "\\acute");
 defineSymbol(math, main, accent, "ˋ", "\\grave");
 defineSymbol(math, main, accent, "¨", "\\ddot");
@@ -4937,6 +4955,10 @@ var fontMap = {
     variant: "italic",
     fontName: "Math-Italic"
   },
+  "mathsfit": {
+    variant: "sans-serif-italic",
+    fontName: "SansSerif-Italic"
+  },
   // "boldsymbol" is missing because they require the use of multiple fonts:
   // Math-BoldItalic and Main-Bold.  This is handled by a special case in
   // makeOrd which ends up calling boldsymbol.
@@ -5423,7 +5445,15 @@ var MathNode = class {
       node.className = createClass(this.classes);
     }
     for (var i = 0; i < this.children.length; i++) {
-      node.appendChild(this.children[i].toNode());
+      if (this.children[i] instanceof TextNode && this.children[i + 1] instanceof TextNode) {
+        var text2 = this.children[i].toText() + this.children[++i].toText();
+        while (this.children[i + 1] instanceof TextNode) {
+          text2 += this.children[++i].toText();
+        }
+        node.appendChild(new TextNode(text2).toNode());
+      } else {
+        node.appendChild(this.children[i].toNode());
+      }
     }
     return node;
   }
@@ -5595,6 +5625,8 @@ var getVariant = function getVariant2(group, options) {
     return "bold";
   } else if (font === "mathbb") {
     return "double-struck";
+  } else if (font === "mathsfit") {
+    return "sans-serif-italic";
   } else if (font === "mathfrak") {
     return "fraktur";
   } else if (font === "mathscr" || font === "mathcal") {
@@ -5617,6 +5649,20 @@ var getVariant = function getVariant2(group, options) {
   }
   return null;
 };
+function isNumberPunctuation(group) {
+  if (!group) {
+    return false;
+  }
+  if (group.type === "mi" && group.children.length === 1) {
+    var child = group.children[0];
+    return child instanceof TextNode && child.text === ".";
+  } else if (group.type === "mo" && group.children.length === 1 && group.getAttribute("separator") === "true" && group.getAttribute("lspace") === "0em" && group.getAttribute("rspace") === "0em") {
+    var _child = group.children[0];
+    return _child instanceof TextNode && _child.text === ",";
+  } else {
+    return false;
+  }
+}
 var buildExpression2 = function buildExpression3(expression, options, isOrdgroup) {
   if (expression.length === 1) {
     var group = buildGroup2(expression[0], options);
@@ -5637,18 +5683,24 @@ var buildExpression2 = function buildExpression3(expression, options, isOrdgroup
       } else if (_group.type === "mn" && lastGroup.type === "mn") {
         lastGroup.children.push(..._group.children);
         continue;
-      } else if (_group.type === "mi" && _group.children.length === 1 && lastGroup.type === "mn") {
-        var child = _group.children[0];
-        if (child instanceof TextNode && child.text === ".") {
-          lastGroup.children.push(..._group.children);
-          continue;
+      } else if (isNumberPunctuation(_group) && lastGroup.type === "mn") {
+        lastGroup.children.push(..._group.children);
+        continue;
+      } else if (_group.type === "mn" && isNumberPunctuation(lastGroup)) {
+        _group.children = [...lastGroup.children, ..._group.children];
+        groups.pop();
+      } else if ((_group.type === "msup" || _group.type === "msub") && _group.children.length >= 1 && (lastGroup.type === "mn" || isNumberPunctuation(lastGroup))) {
+        var base = _group.children[0];
+        if (base instanceof MathNode && base.type === "mn") {
+          base.children = [...lastGroup.children, ...base.children];
+          groups.pop();
         }
       } else if (lastGroup.type === "mi" && lastGroup.children.length === 1) {
         var lastChild = lastGroup.children[0];
         if (lastChild instanceof TextNode && lastChild.text === "̸" && (_group.type === "mo" || _group.type === "mi" || _group.type === "mn")) {
-          var _child = _group.children[0];
-          if (_child instanceof TextNode && _child.text.length > 0) {
-            _child.text = _child.text.slice(0, 1) + "̸" + _child.text.slice(1);
+          var child = _group.children[0];
+          if (child instanceof TextNode && child.text.length > 0) {
+            child.text = child.text.slice(0, 1) + "̸" + child.text.slice(1);
             groups.pop();
           }
         }
@@ -6627,8 +6679,7 @@ function parseCD(parser) {
           mode: "math",
           body: []
         };
-        if ("=|.".indexOf(arrowChar) > -1)
-          ;
+        if ("=|.".indexOf(arrowChar) > -1) ;
         else if ("<>AV".indexOf(arrowChar) > -1) {
           for (var labelNum = 0; labelNum < 2; labelNum++) {
             var inLabel = true;
@@ -9088,6 +9139,7 @@ defineFunction({
     "\\mathit",
     "\\mathbf",
     "\\mathnormal",
+    "\\mathsfit",
     // families
     "\\mathbb",
     "\\mathcal",
@@ -10666,8 +10718,7 @@ var mathmlBuilder2 = (group, options) => {
   var isAllString = true;
   for (var i = 0; i < expression.length; i++) {
     var node = expression[i];
-    if (node instanceof mathMLTree.SpaceNode)
-      ;
+    if (node instanceof mathMLTree.SpaceNode) ;
     else if (node instanceof mathMLTree.MathNode) {
       switch (node.type) {
         case "mi":
@@ -10956,6 +11007,8 @@ defineFunction({
   props: {
     numArgs: 2,
     numOptionalArgs: 1,
+    allowedInText: true,
+    allowedInMath: true,
     argTypes: ["size", "size", "size"]
   },
   handler(_ref, args, optArgs) {
@@ -11611,9 +11664,10 @@ var optionsWithFont = (group, options) => {
     return options.withTextFontFamily(textFontFamilies[font]);
   } else if (textFontWeights[font]) {
     return options.withTextFontWeight(textFontWeights[font]);
-  } else {
-    return options.withTextFontShape(textFontShapes[font]);
+  } else if (font === "\\emph") {
+    return options.fontShape === "textit" ? options.withTextFontShape("textup") : options.withTextFontShape("textit");
   }
+  return options.withTextFontShape(textFontShapes[font]);
 };
 defineFunction({
   type: "text",
@@ -11629,7 +11683,8 @@ defineFunction({
     "\\textmd",
     // Font Shapes
     "\\textit",
-    "\\textup"
+    "\\textup",
+    "\\emph"
   ],
   props: {
     numArgs: 1,
@@ -12072,7 +12127,7 @@ defineMacro("\\char", function(context) {
   }
   return "\\@char{" + number + "}";
 });
-var newcommand = (context, existsOK, nonexistsOK) => {
+var newcommand = (context, existsOK, nonexistsOK, skipIfExists) => {
   var arg = context.consumeArg().tokens;
   if (arg.length !== 1) {
     throw new ParseError("\\newcommand's first argument must be a macro name");
@@ -12100,15 +12155,17 @@ var newcommand = (context, existsOK, nonexistsOK) => {
     numArgs = parseInt(argText);
     arg = context.consumeArg().tokens;
   }
-  context.macros.set(name, {
-    tokens: arg,
-    numArgs
-  });
+  if (!(exists && skipIfExists)) {
+    context.macros.set(name, {
+      tokens: arg,
+      numArgs
+    });
+  }
   return "";
 };
-defineMacro("\\newcommand", (context) => newcommand(context, false, true));
-defineMacro("\\renewcommand", (context) => newcommand(context, true, false));
-defineMacro("\\providecommand", (context) => newcommand(context, true, true));
+defineMacro("\\newcommand", (context) => newcommand(context, false, true, false));
+defineMacro("\\renewcommand", (context) => newcommand(context, true, false, false));
+defineMacro("\\providecommand", (context) => newcommand(context, true, true, true));
 defineMacro("\\message", (context) => {
   var arg = context.consumeArgs(1)[0];
   console.log(arg.reverse().map((token) => token.text).join(""));
@@ -12180,7 +12237,7 @@ defineMacro("\\ulcorner", '\\html@mathml{\\@ulcorner}{\\mathop{\\char"231c}}');
 defineMacro("\\urcorner", '\\html@mathml{\\@urcorner}{\\mathop{\\char"231d}}');
 defineMacro("\\llcorner", '\\html@mathml{\\@llcorner}{\\mathop{\\char"231e}}');
 defineMacro("\\lrcorner", '\\html@mathml{\\@lrcorner}{\\mathop{\\char"231f}}');
-defineMacro("\\vdots", "\\mathord{\\varvdots\\rule{0pt}{15pt}}");
+defineMacro("\\vdots", "{\\varvdots\\rule{0pt}{15pt}}");
 defineMacro("⋮", "\\vdots");
 defineMacro("\\varGamma", "\\mathit{\\Gamma}");
 defineMacro("\\varDelta", "\\mathit{\\Delta}");
@@ -12199,6 +12256,8 @@ defineMacro("\\boxed", "\\fbox{$\\displaystyle{#1}$}");
 defineMacro("\\iff", "\\DOTSB\\;\\Longleftrightarrow\\;");
 defineMacro("\\implies", "\\DOTSB\\;\\Longrightarrow\\;");
 defineMacro("\\impliedby", "\\DOTSB\\;\\Longleftarrow\\;");
+defineMacro("\\dddot", "{\\overset{\\raisebox{-0.1ex}{\\normalsize ...}}{#1}}");
+defineMacro("\\ddddot", "{\\overset{\\raisebox{-0.1ex}{\\normalsize ....}}{#1}}");
 var dotsByToken = {
   ",": "\\dotsc",
   "\\not": "\\dotsb",
@@ -12811,6 +12870,16 @@ var MacroExpander = class {
     return args;
   }
   /**
+   * Increment `expansionCount` by the specified amount.
+   * Throw an error if it exceeds `maxExpand`.
+   */
+  countExpansion(amount) {
+    this.expansionCount += amount;
+    if (this.expansionCount > this.settings.maxExpand) {
+      throw new ParseError("Too many expansions: infinite loop or need to increase maxExpand setting");
+    }
+  }
+  /**
    * Expand the next token only once if possible.
    *
    * If the token is expanded, the resulting tokens will be pushed onto
@@ -12840,10 +12909,7 @@ var MacroExpander = class {
       this.pushToken(topToken);
       return false;
     }
-    this.expansionCount++;
-    if (this.expansionCount > this.settings.maxExpand) {
-      throw new ParseError("Too many expansions: infinite loop or need to increase maxExpand setting");
-    }
+    this.countExpansion(1);
     var tokens = expansion.tokens;
     var args = this.consumeArgs(expansion.numArgs, expansion.delimiters);
     if (expansion.numArgs) {
@@ -12919,6 +12985,7 @@ var MacroExpander = class {
         output.push(token);
       }
     }
+    this.countExpansion(output.length);
     return output;
   }
   /**
@@ -13768,8 +13835,9 @@ var Parser = class _Parser {
           body: primes
         };
       } else if (uSubsAndSups[lex.text]) {
-        var str = uSubsAndSups[lex.text];
         var isSub = unicodeSubRegEx.test(lex.text);
+        var subsupTokens = [];
+        subsupTokens.push(new Token(uSubsAndSups[lex.text]));
         this.consume();
         while (true) {
           var token = this.fetch().text;
@@ -13779,10 +13847,10 @@ var Parser = class _Parser {
           if (unicodeSubRegEx.test(token) !== isSub) {
             break;
           }
+          subsupTokens.unshift(new Token(uSubsAndSups[token]));
           this.consume();
-          str += uSubsAndSups[token];
         }
-        var body = new _Parser(str, this.settings).parse();
+        var body = this.subparse(subsupTokens);
         if (isSub) {
           subscript = {
             type: "ordgroup",
@@ -14355,11 +14423,20 @@ var renderToHTMLTree = function renderToHTMLTree2(expression, options) {
     return renderError(error, expression, settings);
   }
 };
+var version = "0.16.21";
+var __domTree = {
+  Span,
+  Anchor,
+  SymbolNode,
+  SvgNode,
+  PathNode,
+  LineNode
+};
 var katex = {
   /**
    * Current KaTeX version
    */
-  version: "0.16.9",
+  version,
   /**
    * Renders the given LaTeX into an HTML+MathML combination, and adds
    * it as a child to the specified DOM node.
@@ -14375,7 +14452,7 @@ var katex = {
    */
   ParseError,
   /**
-   * The shema of Settings
+   * The schema of Settings
    */
   SETTINGS_SCHEMA,
   /**
@@ -14427,20 +14504,26 @@ var katex = {
   /**
    * Expose the dom tree node types, which can be useful for type checking nodes.
    *
-   * NOTE: This method is not currently recommended for public use.
+   * NOTE: These methods are not currently recommended for public use.
    * The internal tree representation is unstable and is very likely
    * to change. Use at your own risk.
    */
-  __domTree: {
-    Span,
-    Anchor,
-    SymbolNode,
-    SvgNode,
-    PathNode,
-    LineNode
-  }
+  __domTree
 };
 export {
-  katex as default
+  ParseError,
+  SETTINGS_SCHEMA,
+  defineFunction as __defineFunction,
+  defineMacro as __defineMacro,
+  defineSymbol as __defineSymbol,
+  __domTree,
+  generateParseTree as __parse,
+  renderToDomTree as __renderToDomTree,
+  renderToHTMLTree as __renderToHTMLTree,
+  setFontMetrics as __setFontMetrics,
+  katex as default,
+  render,
+  renderToString,
+  version
 };
 //# sourceMappingURL=katex.js.map

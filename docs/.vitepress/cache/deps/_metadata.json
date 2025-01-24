@@ -1,37 +1,37 @@
 {
-  "hash": "3434534b",
-  "configHash": "d354a4ff",
-  "lockfileHash": "1291a5b1",
-  "browserHash": "77b70786",
+  "hash": "7d3ae2a7",
+  "configHash": "d3024deb",
+  "lockfileHash": "a1189e6c",
+  "browserHash": "b428949c",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "a9a5c1be",
+      "fileHash": "363acdd1",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
-      "src": "../../../../node_modules/@vue/devtools-api/lib/esm/index.js",
+      "src": "../../../../node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "7acecbc8",
+      "fileHash": "5a6866c5",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../../node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "48178689",
+      "fileHash": "41ddc263",
       "needsInterop": false
     },
     "katex": {
       "src": "../../../../node_modules/katex/dist/katex.mjs",
       "file": "katex.js",
-      "fileHash": "2648813f",
+      "fileHash": "836f53ab",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-2TJ3EVSA": {
-      "file": "chunk-2TJ3EVSA.js"
+    "chunk-LW4I4DCF": {
+      "file": "chunk-LW4I4DCF.js"
     }
   }
 }
