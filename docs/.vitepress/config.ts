@@ -134,7 +134,8 @@ export default {
                     text: 'BoidSquadron',
                     collapsible: true,
                     items: [
-                      { text: 'Game Introduction', link: '/boidverse/boidsquadron/Introduction' }
+                      { text: 'Game Introduction', link: '/boidverse/boidsquadron/Introduction' },
+                      { text: 'How to Play', link: '/boidverse/boidsquadron/Gameplay' }
                     ]
                   }
                 ]
